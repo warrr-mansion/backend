@@ -19,7 +19,7 @@ public class SwaggerConfig {
     private String swaggerUrl;
 
     @Bean
-    public OpenAPI openApi() {
+    OpenAPI openApi() {
 
         String securityJwtName = "JWT";
         SecurityRequirement securityRequirement =

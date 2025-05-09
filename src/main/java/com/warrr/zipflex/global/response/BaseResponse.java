@@ -2,7 +2,7 @@ package com.warrr.zipflex.global.response;
 
 import static com.warrr.zipflex.global.response.BaseResponseStatus.SUCCESS;
 import org.springframework.http.HttpStatus;
-import com.warrr.zipflex.global.util.TypeCaster;
+import com.warrr.zipflex.global.support.TypeCaster;
 
 public record BaseResponse<T>(HttpStatus httpStatus, Boolean isSuccess, String message, int code,
                 T result) {
