@@ -7,6 +7,7 @@ import lombok.ToString;
 @ToString
 public class ChatMessageRequestDto {
 
+    private String chatUuid;
     private String message;
-    
+
 }

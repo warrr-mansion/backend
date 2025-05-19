@@ -8,16 +8,16 @@ import lombok.ToString;
 @ToString
 public class ChatMessageResponseDto {
 
-    private String message;
+    private String content;
 
     @Builder
-    public ChatMessageResponseDto(String message) {
-        this.message = message;
+    public ChatMessageResponseDto(String content) {
+        this.content = content;
     }
     
-    public static ChatMessageResponseDto toResponse(String message) {
+    public static ChatMessageResponseDto toDto(String content) {
         return ChatMessageResponseDto.builder()
-                        .message(message)
+                        .content(content)
                         .build();
     }
     
