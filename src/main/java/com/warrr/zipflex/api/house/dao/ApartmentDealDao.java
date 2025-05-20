@@ -8,14 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface ApartmentDealDao {
-	List<DealInfoResponseDto> findDealsByFilter(
-		    @Param("buildingType") String buildingType,
-		    @Param("contractType") String contractType,
-		    @Param("sgg") String sgg,
-		    @Param("emd") String emd
-		);
-    
-    List<DealInfoResponseDto> findDealsById(
-    	@Param("houseInfoId")	String houseInfo
-    );
+    List<DealInfoResponseDto> findDealsByFilter(@Param("buildingType") String buildingType,
+                    @Param("contractType") String contractType, @Param("sgg") String sgg,
+                    @Param("emd") String emd);
+
+    List<DealInfoResponseDto> findDealsById(@Param("houseInfoId") String houseInfo);
 }

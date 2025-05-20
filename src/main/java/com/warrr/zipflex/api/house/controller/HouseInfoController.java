@@ -20,20 +20,19 @@ public class HouseInfoController {
         this.houseInfoService = houseInfoService;
     }
 
-    /**
+    /*
      * 매물 조회
      *
      * @param buildingType 건물 유형 (apartment, villa, officetel) - 필수
-     * @param sgg         시군구 코드                              - 선택
-     * @param emd        읍면동 코드                              - 선택
-     * @return 조건에 맞는 거래 정보 목록
+     * @param sgg 시군구 코드 - 선택
+     * @param emd 읍면동 코드 - 선택
+     * @return 조건에 맞는 거래 정보 목록.
      */
     @GetMapping
     public List<HouseInfoResponseDto> getHouseInfo(
-            @RequestParam("buildingType") String buildingType,
-            @RequestParam(value = "sgg",   required = false) String sgg,
-            @RequestParam(value = "emd",  required = false) String emd
-    ) {
+                    @RequestParam("buildingType") String buildingType,
+                    @RequestParam(value = "sgg", required = false) String sgg,
+                    @RequestParam(value = "emd", required = false) String emd) {
         return houseInfoService.getHouseInfo(buildingType, sgg, emd);
     }
 }

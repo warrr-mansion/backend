@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-	namespace="com.warrr.zipflex.api.house.dao.ApartmentDealDao">
+	namespace="com.warrr.zipflex.api.house.dao.OfficetelDealDao">
 
 	<!-- 조건 필터 기반 조회 -->
 	<select id="findDealsByFilter"
@@ -21,7 +21,7 @@
 		monthly_rent AS monthlyRent,
 		exclusive_area AS exclusiveArea,
 		floor
-		FROM apartment_deal
+		FROM officetel_deal
 		WHERE 1 = 1
 
 		<if test="buildingType != null and buildingType != ''">
@@ -68,7 +68,7 @@
 		monthly_rent AS monthlyRent,
 		exclusive_area AS exclusiveArea,
 		floor
-		FROM apartment_deal
+		FROM officetel_deal
 		WHERE
 		house_info_id = #{houseInfoId}
 	</select>

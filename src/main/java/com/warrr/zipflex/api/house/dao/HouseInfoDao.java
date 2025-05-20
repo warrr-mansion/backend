@@ -8,9 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface HouseInfoDao {
-    List<HouseInfoResponseDto> findHouse(
-    	@Param("buildingType") String buildingType,
-        @Param("sgg")     String sgg,
-        @Param("emd")     String emd
-    );
+    List<HouseInfoResponseDto> findHouse(@Param("buildingType") String buildingType,
+                    @Param("sgg") String sgg, @Param("emd") String emd);
 }

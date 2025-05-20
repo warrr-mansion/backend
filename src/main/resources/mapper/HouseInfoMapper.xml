@@ -4,27 +4,29 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.warrr.zipflex.api.house.dao.HouseInfoDao">
 
-  <select id="findHouse" resultType="com.warrr.zipflex.api.house.dto.out.HouseInfoResponseDto">
-    SELECT
-      id,
-      sigungu_code AS sigunguCode,
-      emd_code AS emdCode,
-      emd_name AS emdName,
-      road_name AS roadName,
-      building_name AS buildingName,
-      latitude,
-      longitude
-    FROM house_info
-    WHERE house_type = #{buildingType}
-    
-    <if test="sgg != null and sgg != ''">
-      AND sigungu_code = #{sgg}
-    </if>
-    <if test="emd != null and emd != ''">
-      AND emd_code = #{emd}
-    </if>
+	<select id="findHouse"
+		resultType="com.warrr.zipflex.api.house.dto.out.HouseInfoResponseDto">
+		SELECT
+		id,
+		sigungu_code AS sigunguCode,
+		emd_code AS emdCode,
+		emd_name AS
+		emdName,
+		road_name AS roadName,
+		building_name AS buildingName,
+		latitude,
+		longitude
+		FROM house_info
+		WHERE house_type = #{buildingType}
 
-    LIMIT 10
-  </select>
+		<if test="sgg != null and sgg != ''">
+			AND sigungu_code = #{sgg}
+		</if>
+		<if test="emd != null and emd != ''">
+			AND emd_code = #{emd}
+		</if>
+
+		LIMIT 10
+	</select>
 
 </mapper>

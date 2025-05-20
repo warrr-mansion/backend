@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HouseInfoResponseDto {
-    private long   id;
-    private int   sigunguCode;
-    private int   emdCode;
+    private long id;
+    private int sigunguCode;
+    private int emdCode;
     private String emdName;
     private String roadName;
     private String buildingName;
     private BigDecimal latitude;
     private BigDecimal longitude;
 }
-

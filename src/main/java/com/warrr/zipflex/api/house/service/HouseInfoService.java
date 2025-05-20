@@ -6,6 +6,6 @@ import com.warrr.zipflex.api.house.dto.out.HouseInfoResponseDto;
 
 public interface HouseInfoService {
 
-	List<HouseInfoResponseDto> getHouseInfo(String buildingType, String sgg, String emd);
+    List<HouseInfoResponseDto> getHouseInfo(String buildingType, String sgg, String emd);
 
 }

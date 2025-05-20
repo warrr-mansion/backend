@@ -9,13 +9,8 @@ import java.util.List;
 
 @Mapper
 public interface OfficetelDealDao {
-    List<DealInfoResponseDto> findDealsByFilter(
-    	@Param("contractType")	String contractType,
-        @Param("sgg")     String sgg,
-        @Param("emd")    String emd
-    );
-    
-    List<DealInfoResponseDto> findDealsById(
-    	@Param("houseInfoId")	String houseInfo
-    );
+    List<DealInfoResponseDto> findDealsByFilter(@Param("contractType") String contractType,
+                    @Param("sgg") String sgg, @Param("emd") String emd);
+
+    List<DealInfoResponseDto> findDealsById(@Param("houseInfoId") String houseInfo);
 }
