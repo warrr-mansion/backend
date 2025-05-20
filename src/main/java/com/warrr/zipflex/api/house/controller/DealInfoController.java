@@ -1,15 +1,14 @@
 package com.warrr.zipflex.api.house.controller;
 
 import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.warrr.zipflex.api.house.dto.out.DealInfoResponseDto;
 import com.warrr.zipflex.api.house.service.DealInfoService;
+import com.warrr.zipflex.global.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -33,11 +32,11 @@ public class DealInfoController {
      * @return 조건에 맞는 거래 정보 목록.
      */
     @GetMapping("/{buildingType}")
-    public List<DealInfoResponseDto> getDealInfoByFilter(@PathVariable String buildingType,
+    public BaseResponse<List<DealInfoResponseDto>> getDealInfoByFilter(@PathVariable String buildingType,
                     @RequestParam(value = "contractType", required = false) String contractType,
                     @RequestParam(value = "sgg", required = false) String sgg,
                     @RequestParam(value = "emd", required = false) String emd) {
-        return dealInfoService.getDealInfoByFilter(buildingType, contractType, sgg, emd);
+        return new BaseResponse<>(dealInfoService.getDealInfoByFilter(buildingType, contractType, sgg, emd));
     }
 
     /*
