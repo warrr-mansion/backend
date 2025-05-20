@@ -32,11 +32,13 @@ public class DealInfoController {
      * @return 조건에 맞는 거래 정보 목록.
      */
     @GetMapping("/{buildingType}")
-    public BaseResponse<List<DealInfoResponseDto>> getDealInfoByFilter(@PathVariable String buildingType,
+    public BaseResponse<List<DealInfoResponseDto>> getDealInfoByFilter(
+                    @PathVariable String buildingType,
                     @RequestParam(value = "contractType", required = false) String contractType,
                     @RequestParam(value = "sgg", required = false) String sgg,
                     @RequestParam(value = "emd", required = false) String emd) {
-        return new BaseResponse<>(dealInfoService.getDealInfoByFilter(buildingType, contractType, sgg, emd));
+        return new BaseResponse<>(
+                        dealInfoService.getDealInfoByFilter(buildingType, contractType, sgg, emd));
     }
 
     /*
@@ -47,9 +49,9 @@ public class DealInfoController {
      * @param houseInfoId - 선택.
      */
     @GetMapping("/{id}")
-    public List<DealInfoResponseDto> getDealInfoByHouseInfoId(@PathVariable String id,
+    public BaseResponse<List<DealInfoResponseDto>> getDealInfoByHouseInfoId(@PathVariable String id,
                     @RequestParam String buildingType) {
-        return dealInfoService.getDealInfoByHouseInfoId(buildingType, id);
+        return new BaseResponse<>(dealInfoService.getDealInfoByHouseInfoId(buildingType, id));
     }
 
 
