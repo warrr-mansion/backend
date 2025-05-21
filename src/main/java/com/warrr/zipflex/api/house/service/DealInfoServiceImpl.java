@@ -1,6 +1,5 @@
 package com.warrr.zipflex.api.house.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.warrr.zipflex.api.house.dao.ApartmentDealDao;
 import com.warrr.zipflex.api.house.dao.VillaDealDao;
@@ -9,19 +8,21 @@ import com.warrr.zipflex.api.house.dao.DealDao;
 import com.warrr.zipflex.api.house.dto.out.DealInfoResponseDto;
 import com.warrr.zipflex.global.support.PageRequestDto;
 import com.warrr.zipflex.global.support.PageResponseDto;
+import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class DealInfoServiceImpl implements DealInfoService {
-    @Autowired
+
     private ApartmentDealDao apartmentDealDao;
 
-    @Autowired
+
     private VillaDealDao villaDealDao;
 
-    @Autowired
+
     private OfficetelDealDao officetelDealDao;
 
     /**
