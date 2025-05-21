@@ -1,16 +1,8 @@
 package com.warrr.zipflex.api.house.dao;
 
-import com.warrr.zipflex.api.house.dto.out.DealInfoResponseDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 @Mapper
-public interface ApartmentDealDao {
-    List<DealInfoResponseDto> findDealsByFilter(@Param("buildingType") String buildingType,
-                    @Param("contractType") String contractType, @Param("sgg") String sgg,
-                    @Param("emd") String emd);
-
-    List<DealInfoResponseDto> findDealsById(@Param("houseInfoId") String houseInfo);
+public interface ApartmentDealDao extends DealDao {
+    // 공통 인터페이스의 메서드를 상속받으므로 추가 메서드가 없으면 비어있을 수 있습니다
 }
