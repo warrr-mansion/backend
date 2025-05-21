@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 거래 정보 DAO 공통 인터페이스
+ * 거래 정보 DAO 공통 인터페이스.
  */
 public interface DealDao {
     // 기존 메서드

@@ -30,7 +30,7 @@ public class HouseInfoServiceImpl implements HouseInfoService {
             PageRequestDto requestDto) {
 
         // 총 항목 수 조회
-        int totalCount = houseInfoDao.countHouseInfo(buildingType, sgg, emd);
+        final int totalCount = houseInfoDao.countHouseInfo(buildingType, sgg, emd);
 
         // 페이지 요청 객체의 유효성 검증 및 기본값 설정
         if (requestDto == null) {
@@ -51,7 +51,7 @@ public class HouseInfoServiceImpl implements HouseInfoService {
         return PageResponseDto.<HouseInfoResponseDto>withAll()
                 .dtoList(dtoList)
                 .totalCount(totalCount)
-                .pageRequestDTO(requestDto)
+                .pageRequestDto(requestDto)
                 .build();
     }
 }

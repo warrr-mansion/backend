@@ -23,7 +23,7 @@ public class DealInfoController {
     private final DealInfoService dealInfoService;
 
     /**
-     * 실거래가 조건별 조회
+     * 실거래가 조건별 조회.
      *
      * @param buildingType 건물 유형 (apartment, villa, officetel) - 필수
      * @param contractType 거래 유형 (전세, 매매, 월세) - 선택
@@ -42,7 +42,7 @@ public class DealInfoController {
     }
 
     /**
-     * 실거래가 house_info_id로 조회
+     * 실거래가 house_info_id로 조회.
      *
      * @param buildingType 건물 유형 (apartment, villa, officetel) - 필수
      * @param houseInfoId - 선택.
@@ -54,7 +54,7 @@ public class DealInfoController {
     }
 
     /**
-     * 실거래가 조건별 조회 (오프셋 페이지네이션)
+     * 실거래가 조건별 조회 (오프셋 페이지네이션).
      *
      * @param buildingType 건물 유형 (apartment, villa, officetel) - 필수
      * @param contractType 거래 유형 (전세, 매매, 월세) - 선택
@@ -80,7 +80,7 @@ public class DealInfoController {
     }
 
     /**
-     * 실거래가 house_info_id로 조회 (오프셋 페이지네이션)
+     * 실거래가 house_info_id로 조회 (오프셋 페이지네이션).
      *
      * @param id house_info_id - 필수
      * @param buildingType 건물 유형 (apartment, villa, officetel) - 필수

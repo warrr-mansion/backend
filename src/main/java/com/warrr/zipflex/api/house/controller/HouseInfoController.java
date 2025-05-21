@@ -23,7 +23,7 @@ public class HouseInfoController {
     private final HouseInfoService houseInfoService;
 
     /**
-     * 매물 조회
+     * 매물 조회.
      *
      * @param buildingType 건물 유형 (apartment, villa, officetel) - 필수
      * @param sgg 시군구 코드 - 선택
@@ -38,7 +38,7 @@ public class HouseInfoController {
     }
 
     /**
-     * 매물 조회 (오프셋 페이지네이션)
+     * 매물 조회 (오프셋 페이지네이션).
      *
      * @param buildingType 건물 유형 (apartment, villa, officetel) - 필수
      * @param sgg 시군구 코드 - 선택

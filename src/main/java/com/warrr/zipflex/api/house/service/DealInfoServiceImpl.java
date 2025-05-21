@@ -25,7 +25,7 @@ public class DealInfoServiceImpl implements DealInfoService {
     private OfficetelDealDao officetelDealDao;
 
     /**
-     * 건물 유형에 따라 적절한 DAO를 선택하는 헬퍼 메서드
+     * 건물 유형에 따라 적절한 DAO를 선택하는 헬퍼 메서드.
      */
     private DealDao getDaoByBuildingType(String buildingType) {
         if (buildingType == null) {
@@ -70,8 +70,6 @@ public class DealInfoServiceImpl implements DealInfoService {
 
         DealDao dao = getDaoByBuildingType(buildingType);
 
-        // 총 항목 수 조회
-        int totalCount = dao.countDealsByFilter(buildingType, contractType, sgg, emd);
 
         // 파라미터 맵 구성
         Map<String, Object> paramMap = new HashMap<>();
@@ -84,9 +82,13 @@ public class DealInfoServiceImpl implements DealInfoService {
         // 데이터 조회
         List<DealInfoResponseDto> dtoList = dao.findDealsByFilterWithPagination(paramMap);
 
+        // 총 항목 수 조회
+        int totalCount = dao.countDealsByFilter(buildingType, contractType, sgg, emd);
+
+
         // PageResponseDto 객체 생성 및 반환
         return PageResponseDto.<DealInfoResponseDto>withAll().dtoList(dtoList)
-                        .totalCount(totalCount).pageRequestDTO(requestDto).build();
+                        .totalCount(totalCount).pageRequestDto(requestDto).build();
     }
 
     @Override
@@ -113,6 +115,6 @@ public class DealInfoServiceImpl implements DealInfoService {
 
         // PageResponseDto 객체 생성 및 반환
         return PageResponseDto.<DealInfoResponseDto>withAll().dtoList(dtoList)
-                        .totalCount(totalCount).pageRequestDTO(requestDto).build();
+                        .totalCount(totalCount).pageRequestDto(requestDto).build();
     }
 }
