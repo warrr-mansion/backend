@@ -28,6 +28,11 @@ public enum BaseResponseStatus {
      * 600: 타입 에러.
      */
     INVALID_ROLE(HttpStatus.BAD_REQUEST, false, 600, "지원하지 않는 RoleType입니다.");
+  
+    /**
+     * 700: House Domain 에러.
+     */
+    INVALID_ROLE(HttpStatus.BAD_REQUEST, false, 701, "지원하지 않는 BuildingType입니다.");
 
     private final HttpStatus httpStatus;
     private final boolean isSuccess;
