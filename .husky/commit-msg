@@ -10,11 +10,16 @@ if ! echo "$commit_message" | grep -Eq '^(🎉 init|:tada: init|'\
 '♻️ refactor|:recycle: refactor|'\
 '✅ test|:white_check_mark: test|'\
 '👷 chore|:construction_worker: chore|'\
+'🔒️ chore|:lock: chore|'\
+'🔐 chore|:closed_lock_with_key: chore|'\
+'🙈 chore|:see_no_evil: chore|'\
 '🚚 rename|:truck: rename|'\
+'🚚 move|:truck: move|'\
 '🔥 remove|:fire: remove|'\
 '⚡️ improve|:zap: improve|'\
 '🚧 wip|:construction: wip|'\
 '🔖 release|:bookmark: release|'\
+'⬆️ chore|:arrow_up: chore|'\
 '⬇️ chore|:arrow_down: chore|'\
 '🔧 chore|:wrench: chore|'\
 '🚨 fix|:rotating_light: fix|'\

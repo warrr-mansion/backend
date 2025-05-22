@@ -1,4 +1,4 @@
-package com.warrr.zipflex.global.exception;
+package com.warrr.zipflex.global.exception.handler;
 
 import static com.warrr.zipflex.global.response.BaseResponseStatus.INTERNAL_SERVER_ERROR;
 import static com.warrr.zipflex.global.response.BaseResponseStatus.INVALID_INPUT_VALUE;
@@ -6,6 +6,7 @@ import static com.warrr.zipflex.global.response.BaseResponseStatus.INVALID_INPUT
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.warrr.zipflex.global.exception.BaseException;
 import com.warrr.zipflex.global.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 
