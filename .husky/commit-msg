@@ -18,6 +18,7 @@ if ! echo "$commit_message" | grep -Eq '^(🎉 init|:tada: init|'\
 '⬇️ chore|:arrow_down: chore|'\
 '🔧 chore|:wrench: chore|'\
 '🚨 fix|:rotating_light: fix|'\
+'➕ chore|:heavy_plus_sign: chore|'\
 '💩 poo|:poop: poo|'\
 '🍻 drunk|:beers: drunk|'\
 '👽 external|:alien: external|'\
