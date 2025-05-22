@@ -11,11 +11,13 @@ import com.warrr.zipflex.global.support.CursorPage;
 @Mapper
 public interface HouseInfoDao {
     // 기존 메서드
-//    List<HouseInfoResponseDto> findHouseInfo(String buildingType, String sgg, String emd);
-    
+    // List<HouseInfoResponseDto> findHouseInfo(String buildingType, String sgg, String emd);
+
     // 오프셋 페이지네이션 메서드
     List<HouseInfoResponseDto> findHouseInfoWithPagination(Map<String, Object> paramMap);
-    
+
     // 총 항목 수 조회 메서드
     int countHouseInfo(String buildingType, String sgg, String emd);
+
+    int countHouseByFilter(String buildingType, String contractType, String sgg, String emd);
 }

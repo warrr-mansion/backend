@@ -12,11 +12,11 @@ import java.util.Map;
 @Mapper
 public interface DealDao {
     // 기존 메서드
-//    List<DealInfoResponseDto> findDealsByFilter(@Param("buildingType") String buildingType,
-//                    @Param("contractType") String contractType, @Param("sgg") String sgg,
-//                    @Param("emd") String emd);
-//
-//    List<DealInfoResponseDto> findDealsById(@Param("houseInfoId") String houseInfoId);
+    // List<DealInfoResponseDto> findDealsByFilter(@Param("buildingType") String buildingType,
+    // @Param("contractType") String contractType, @Param("sgg") String sgg,
+    // @Param("emd") String emd);
+    //
+    // List<DealInfoResponseDto> findDealsById(@Param("houseInfoId") String houseInfoId);
 
     // 오프셋 페이지네이션 적용 메서드
     List<DealInfoResponseDto> findDealsByFilterWithPagination(Map<String, Object> paramMap);

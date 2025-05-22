@@ -1,8 +1,6 @@
 package com.warrr.zipflex.api.house.dto.out;
 
-import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +14,6 @@ public class HouseInfoResponseDto {
     private String emdName;
     private String roadName;
     private String buildingName;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
+    private double latitude;
+    private double longitude;
 }

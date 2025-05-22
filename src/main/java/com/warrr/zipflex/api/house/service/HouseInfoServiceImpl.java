@@ -1,41 +1,33 @@
 package com.warrr.zipflex.api.house.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.warrr.zipflex.api.house.dao.HouseInfoDao;
-import com.warrr.zipflex.api.house.dto.out.DealInfoResponseDto;
 import com.warrr.zipflex.api.house.dto.out.HouseInfoResponseDto;
-import com.warrr.zipflex.global.response.BaseResponse;
 import com.warrr.zipflex.global.support.CursorPage;
 import com.warrr.zipflex.global.support.PageRequestDto;
-import com.warrr.zipflex.global.support.PageResponseDto;
-
+import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class HouseInfoServiceImpl implements HouseInfoService {
 
-    @Autowired
-    private HouseInfoDao houseInfoDao;
 
-//    @Override
-//    public List<HouseInfoResponseDto> getHouseInfo(String buildingType, String sgg, String emd) {
-//        return houseInfoDao.findHouseInfo(buildingType, sgg, emd);
-//    }
+    private final HouseInfoDao houseInfoDao;
+
+    // 총 항목 수 조회 API 추가
+    @Override
+    public int getHouseCountByFilter(String buildingType, String contractType, String sgg,
+                    String emd) {
+        return houseInfoDao.countHouseByFilter(buildingType, contractType, sgg, emd);
+    }
 
     @Override
-    public PageResponseDto<HouseInfoResponseDto> findHouseInfoWithPagination(
-            String buildingType,
-            String sgg,
-            String emd,
-            PageRequestDto requestDto) {
+    public CursorPage<HouseInfoResponseDto> findHouseInfoWithPagination(String buildingType,
+                    String sgg, String emd, PageRequestDto requestDto) {
 
-        // 총 항목 수 조회
-        final int totalCount = houseInfoDao.countHouseInfo(buildingType, sgg, emd);
-
-        // 페이지 요청 객체의 유효성 검증 및 기본값 설정
         if (requestDto == null) {
             requestDto = new PageRequestDto();
         }
@@ -46,15 +38,24 @@ public class HouseInfoServiceImpl implements HouseInfoService {
         paramMap.put("sgg", sgg);
         paramMap.put("emd", emd);
         paramMap.put("pageRequest", requestDto);
+        paramMap.put("limitPlusOne", requestDto.getSize() + 1);
 
         // 데이터 조회
         List<HouseInfoResponseDto> dtoList = houseInfoDao.findHouseInfoWithPagination(paramMap);
 
-        // PageResponseDto 객체 생성 및 반환
-        return PageResponseDto.<HouseInfoResponseDto>withAll()
-                .dtoList(dtoList)
-                .totalCount(totalCount)
-                .pageRequestDto(requestDto)
-                .build();
+        int pageSize = requestDto.getSize();
+        int pageNo = requestDto.getPage();
+        boolean hasNext = dtoList.size() > pageSize;
+
+        if (hasNext) {
+            dtoList = dtoList.subList(0, pageSize);
+        }
+
+        Long nextCursor = hasNext && !dtoList.isEmpty() ? dtoList.get(dtoList.size() - 1).getId() // 커서용
+                                                                                                  // id
+                        : null;
+
+        return CursorPage.<HouseInfoResponseDto>builder().content(dtoList).pageSize(pageSize)
+                        .pageNo(pageNo).hasNext(hasNext).nextCursor(nextCursor).build();
     }
 }

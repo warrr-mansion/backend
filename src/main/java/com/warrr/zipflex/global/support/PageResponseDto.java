@@ -1,24 +1,22 @@
 package com.warrr.zipflex.global.support;
 
-import lombok.Builder;
-
-import lombok.Data;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
+@Getter
 public class PageResponseDto<E> {
     private List<E> dtoList; // 현재 페이지에 해당하는 데이터 목록
     private List<Integer> pageNumList; // 페이지 번호 리스트 (ex. [1, 2, 3, ..., 10])
     private PageRequestDto pageRequestDto; // 요청 정보 (현재 페이지, 페이지 크기 등)
     private boolean prev;
     private boolean next;
-    private int totalCount; 
-    private int prevPage; 
-    private int nextPage; 
-    private int totalPage; 
+    private int totalCount;
+    private int prevPage;
+    private int nextPage;
+    private int totalPage;
     private int current;
 
     @Builder(builderMethodName = "withAll")

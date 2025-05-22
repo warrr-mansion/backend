@@ -43,19 +43,20 @@ public class DealInfoServiceImpl implements DealInfoService {
         }
     }
 
-//    @Override
-//    public List<DealInfoResponseDto> getDealInfoByFilter(String buildingType, String contractType,
-//                    String sgg, String emd) {
-//        DealDao dao = getDaoByBuildingType(buildingType);
-//        return dao.findDealsByFilter(buildingType, contractType, sgg, emd);
-//    }
-//
-//    @Override
-//    public List<DealInfoResponseDto> getDealInfoByHouseInfoId(String buildingType,
-//                    String houseInfoId) {
-//        DealDao dao = getDaoByBuildingType(buildingType);
-//        return dao.findDealsById(houseInfoId);
-//    }
+    // @Override
+    // public List<DealInfoResponseDto> getDealInfoByFilter(String buildingType, String
+    // contractType,
+    // String sgg, String emd) {
+    // DealDao dao = getDaoByBuildingType(buildingType);
+    // return dao.findDealsByFilter(buildingType, contractType, sgg, emd);
+    // }
+    //
+    // @Override
+    // public List<DealInfoResponseDto> getDealInfoByHouseInfoId(String buildingType,
+    // String houseInfoId) {
+    // DealDao dao = getDaoByBuildingType(buildingType);
+    // return dao.findDealsById(houseInfoId);
+    // }
 
     // 총 항목 수 조회 API 추가
     @Override
@@ -72,8 +73,8 @@ public class DealInfoServiceImpl implements DealInfoService {
     }
 
     @Override
-    public CursorPage<DealInfoResponseDto> getDealInfoByFilterWithPagination(
-            String buildingType, String contractType, String sgg, String emd, PageRequestDto requestDto) {
+    public CursorPage<DealInfoResponseDto> getDealInfoByFilterWithPagination(String buildingType,
+                    String contractType, String sgg, String emd, PageRequestDto requestDto) {
 
         DealDao dao = getDaoByBuildingType(buildingType);
 
@@ -95,23 +96,18 @@ public class DealInfoServiceImpl implements DealInfoService {
             deals = deals.subList(0, pageSize); // 다음 페이지 존재하므로 1개 더 온 것 자르기
         }
 
-        String nextCursor = hasNext && !deals.isEmpty()
-                ? String.valueOf(deals.get(deals.size() - 1).getId())  // 커서용 id
-                : null;
+        Long nextCursor = hasNext && !deals.isEmpty() ? deals.get(deals.size() - 1).getId() // 커서용
+                                                                                            // id
+                        : null;
 
-        return CursorPage.<DealInfoResponseDto>builder()
-                .content(deals)
-                .pageSize(pageSize)
-                .pageNo(pageNo)
-                .hasNext(hasNext)
-                .nextCursor(nextCursor)
-                .build();
+        return CursorPage.<DealInfoResponseDto>builder().content(deals).pageSize(pageSize)
+                        .pageNo(pageNo).hasNext(hasNext).nextCursor(nextCursor).build();
     }
 
 
     @Override
     public CursorPage<DealInfoResponseDto> getDealInfoByHouseInfoIdWithPagination(
-            String buildingType, String houseInfoId, PageRequestDto requestDto) {
+                    String buildingType, String houseInfoId, PageRequestDto requestDto) {
 
         DealDao dao = getDaoByBuildingType(buildingType);
 
@@ -130,17 +126,12 @@ public class DealInfoServiceImpl implements DealInfoService {
             deals = deals.subList(0, pageSize);
         }
 
-        String nextCursor = hasNext && !deals.isEmpty()
-                ? String.valueOf(deals.get(deals.size() - 1).getId())
-                : null;
+        Long nextCursor = hasNext && !deals.isEmpty() ? deals.get(deals.size() - 1).getId() // 커서용
+                                                                                            // id
+                        : null;
 
-        return CursorPage.<DealInfoResponseDto>builder()
-                .content(deals)
-                .pageSize(pageSize)
-                .pageNo(pageNo)
-                .hasNext(hasNext)
-                .nextCursor(nextCursor)
-                .build();
+        return CursorPage.<DealInfoResponseDto>builder().content(deals).pageSize(pageSize)
+                        .pageNo(pageNo).hasNext(hasNext).nextCursor(nextCursor).build();
     }
 
 }

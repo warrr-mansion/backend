@@ -54,11 +54,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 
 		ORDER BY id ASC
-		LIMIT #{pageRequest.size} OFFSET #{pageRequest.offset}
+		LIMIT #{limitPlusOne} OFFSET #{pageRequest.offset}
 	</select>
 
 	<!-- 총 항목 수를 가져오는 쿼리 -->
-	<select id="countHouseInfo" resultType="Integer">
+	<select id="countHouseByFilter" resultType="Integer">
 		SELECT COUNT(*)
 		FROM house_info
 		WHERE house_type = #{buildingType}
