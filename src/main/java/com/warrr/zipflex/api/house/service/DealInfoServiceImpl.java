@@ -1,6 +1,6 @@
 package com.warrr.zipflex.api.house.service;
 
-import static com.warrr.zipflex.global.response.BaseResponseStatus.INVALID_ROLE;
+import static com.warrr.zipflex.global.response.BaseResponseStatus.INVALID_BUILDING_TYPE;
 
 
 
@@ -39,7 +39,7 @@ public class DealInfoServiceImpl implements DealInfoService {
             case "OFFICETEL":
                 return officetelDealDao;
             default:
-                throw new BaseException(INVALID_ROLE);
+                throw new BaseException(INVALID_BUILDING_TYPE);
         }
     }
 
