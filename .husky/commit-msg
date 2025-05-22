@@ -13,7 +13,11 @@ if ! echo "$commit_message" | grep -Eq '^(🎉 init|:tada: init|'\
 '🚚 rename|:truck: rename|'\
 '🔥 remove|:fire: remove|'\
 '⚡️ improve|:zap: improve|'\
-'🚧 wip|:necktie: wip|'\
+'🚧 wip|:construction: wip|'\
+'🔖 release|:bookmark: release|'\
+'⬇️ chore|:arrow_down: chore|'\
+'🔧 chore|:wrench: chore|'\
+'🚨 fix|:rotating_light: fix|'\
 '💩 poo|:poop: poo|'\
 '🍻 drunk|:beers: drunk|'\
 '👽 external|:alien: external|'\
