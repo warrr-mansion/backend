@@ -96,9 +96,7 @@ public class DealInfoServiceImpl implements DealInfoService {
             deals = deals.subList(0, pageSize); // 다음 페이지 존재하므로 1개 더 온 것 자르기
         }
 
-        Long nextCursor = hasNext && !deals.isEmpty() ? deals.get(deals.size() - 1).getId() // 커서용
-                                                                                            // id
-                        : null;
+        Long nextCursor = hasNext && !deals.isEmpty() ? deals.get(deals.size() - 1).getId() : null;
 
         return CursorPage.<DealInfoResponseDto>builder().content(deals).pageSize(pageSize)
                         .pageNo(pageNo).hasNext(hasNext).nextCursor(nextCursor).build();
@@ -126,9 +124,7 @@ public class DealInfoServiceImpl implements DealInfoService {
             deals = deals.subList(0, pageSize);
         }
 
-        Long nextCursor = hasNext && !deals.isEmpty() ? deals.get(deals.size() - 1).getId() // 커서용
-                                                                                            // id
-                        : null;
+        Long nextCursor = hasNext && !deals.isEmpty() ? deals.get(deals.size() - 1).getId() : null;
 
         return CursorPage.<DealInfoResponseDto>builder().content(deals).pageSize(pageSize)
                         .pageNo(pageNo).hasNext(hasNext).nextCursor(nextCursor).build();
