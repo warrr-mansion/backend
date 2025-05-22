@@ -13,9 +13,11 @@ if ! echo "$commit_message" | grep -Eq '^(🎉 init|:tada: init|'\
 '🚚 rename|:truck: rename|'\
 '🔥 remove|:fire: remove|'\
 '⚡️ improve|:zap: improve|'\
+'🚧 wip|:necktie: wip|'\
 '💩 poo|:poop: poo|'\
 '🍻 drunk|:beers: drunk|'\
 '👽 external|:alien: external|'\
+'👔 feat|:necktie: feat|'\
 '🔀 merge|:twisted_rightwards_arrows: merge): .+$'; then
     echo "🚫 Error: Commit message does not follow the convention!"
     exit 1

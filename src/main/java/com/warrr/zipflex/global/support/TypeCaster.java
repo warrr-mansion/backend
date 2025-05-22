@@ -1,4 +1,4 @@
-package com.warrr.zipflex.global.util;
+package com.warrr.zipflex.global.support;
 
 public class TypeCaster {
 
