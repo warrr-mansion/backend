@@ -30,12 +30,12 @@ public class HouseInfoController {
      * @param emd 읍면동 코드 - 선택
      * @return 조건에 맞는 거래 정보 목록.
      */
-    @GetMapping("/type/{buildingType}")
-    public BaseResponse<List<HouseInfoResponseDto>> getHouseInfo(@PathVariable String buildingType,
-                    @RequestParam(value = "sgg", required = false) String sgg,
-                    @RequestParam(value = "emd", required = false) String emd) {
-        return new BaseResponse<>(houseInfoService.getHouseInfo(buildingType, sgg, emd));
-    }
+//    @GetMapping("/type/{buildingType}")
+//    public BaseResponse<List<HouseInfoResponseDto>> getHouseInfo(@PathVariable String buildingType,
+//                    @RequestParam(value = "sgg", required = false) String sgg,
+//                    @RequestParam(value = "emd", required = false) String emd) {
+//        return new BaseResponse<>(houseInfoService.getHouseInfo(buildingType, sgg, emd));
+//    }
 
     /**
      * 매물 조회 (오프셋 페이지네이션).
@@ -47,7 +47,7 @@ public class HouseInfoController {
      * @return 오프셋 페이지네이션이 적용된 매물 정보 목록.
      */
     @Operation(summary = "매물 조회 (페이지네이션)", description = "건물 유형에 따른 매물 정보를 페이지 단위로 조회합니다")
-    @GetMapping("/type/{buildingType}/page")
+    @GetMapping("/type/{buildingType}")
     public BaseResponse<PageResponseDto<HouseInfoResponseDto>> getHouseInfoWithPagination(
                     @Parameter(description = "건물 유형 (apartment, villa, officetel)",
                                     required = true) @PathVariable String buildingType,

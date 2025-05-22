@@ -3,7 +3,10 @@ package com.warrr.zipflex.api.house.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.warrr.zipflex.api.house.dao.HouseInfoDao;
+import com.warrr.zipflex.api.house.dto.out.DealInfoResponseDto;
 import com.warrr.zipflex.api.house.dto.out.HouseInfoResponseDto;
+import com.warrr.zipflex.global.response.BaseResponse;
+import com.warrr.zipflex.global.support.CursorPage;
 import com.warrr.zipflex.global.support.PageRequestDto;
 import com.warrr.zipflex.global.support.PageResponseDto;
 
@@ -17,10 +20,10 @@ public class HouseInfoServiceImpl implements HouseInfoService {
     @Autowired
     private HouseInfoDao houseInfoDao;
 
-    @Override
-    public List<HouseInfoResponseDto> getHouseInfo(String buildingType, String sgg, String emd) {
-        return houseInfoDao.findHouseInfo(buildingType, sgg, emd);
-    }
+//    @Override
+//    public List<HouseInfoResponseDto> getHouseInfo(String buildingType, String sgg, String emd) {
+//        return houseInfoDao.findHouseInfo(buildingType, sgg, emd);
+//    }
 
     @Override
     public PageResponseDto<HouseInfoResponseDto> findHouseInfoWithPagination(
