@@ -83,7 +83,6 @@ public class JwtTokenProvider {
         return parseClaims(token).getExpiration().before(new Date());
     }
 
-
     public String getUserUuidByToken(String token) {
         return parseClaims(token).getSubject();
     }

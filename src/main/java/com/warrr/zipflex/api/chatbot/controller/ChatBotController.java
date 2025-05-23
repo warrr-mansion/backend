@@ -9,11 +9,13 @@ import com.warrr.zipflex.api.chatbot.dto.out.ChatMessageResponseDto;
 import com.warrr.zipflex.api.chatbot.service.ChatBotService;
 import com.warrr.zipflex.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@RestController
+@Tag(name = "ChatBot")
 @RequestMapping("/v1/chatbot")
 @RequiredArgsConstructor
+@RestController
 public class ChatBotController {
 
     private final ChatBotService chatBotService;

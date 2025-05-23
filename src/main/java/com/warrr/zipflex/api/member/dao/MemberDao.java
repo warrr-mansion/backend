@@ -7,5 +7,5 @@ import com.warrr.zipflex.api.member.domain.entity.Member;
 public interface MemberDao {
 
     Member findByUuid(String uuid);
-    
+
 }
