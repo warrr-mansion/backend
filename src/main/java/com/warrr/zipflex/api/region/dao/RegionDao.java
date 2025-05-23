@@ -12,5 +12,5 @@ public interface RegionDao {
 
     List<GugunDto> findAllGugun(String sidoCodePrefix);
 
-    List<DongDto> findAllDong(String gugunCode);
+    List<DongDto> findAllDong(String gugunCodePrefix);
 }

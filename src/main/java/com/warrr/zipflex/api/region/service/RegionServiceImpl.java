@@ -26,8 +26,8 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public List<DongDto> getAllDong(String sidoCode) {
-        String gugunCode = sidoCode.substring(0, 5);
-        return regionDao.findAllDong(gugunCode);
+    public List<DongDto> getAllDong(String gugunCode) {
+        String gugunCodePrefix = gugunCode.substring(0, 5);
+        return regionDao.findAllDong(gugunCodePrefix);
     }
 }

@@ -28,7 +28,7 @@
 		resultType="com.warrr.zipflex.api.region.dto.DongDto">
 		SELECT dong_code AS code, dong_name AS name
 		FROM dongcodes
-		WHERE LEFT(dong_code, 5) = #{gugunCode}
+		WHERE LEFT(dong_code, 5) = #{gugunCodePrefix}
 		AND dong_name IS NOT NULL
 		ORDER
 		BY dong_name

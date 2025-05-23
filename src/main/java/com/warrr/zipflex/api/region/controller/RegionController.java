@@ -26,7 +26,7 @@ public class RegionController {
     }
 
     @GetMapping("/dong")
-    public List<DongDto> getDong(@RequestParam String sidoCode) {
-        return regionService.getAllDong(sidoCode);
+    public List<DongDto> getDong(@RequestParam String gugunCode) {
+        return regionService.getAllDong(gugunCode);
     }
 }

@@ -32,9 +32,9 @@ public class RegionDaoImpl implements RegionDao {
     }
 
     @Override
-    public List<DongDto> findAllDong(String gugunCode) {
+    public List<DongDto> findAllDong(@Param("gugunCodePrefix") String gugunCodePrefix) {
         Map<String, String> param = new HashMap<>();
-        param.put("gugunCode", gugunCode); // ✅ XML #{gugunCode} 와 정확히 일치
+        param.put("gugunCode", gugunCodePrefix); // ✅ XML #{gugunCode} 와 정확히 일치
         return sqlSession.selectList(NAMESPACE + "findAllDong", param);
     }
 

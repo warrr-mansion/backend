@@ -7,6 +7,9 @@ import com.warrr.zipflex.api.region.dto.SidoDto;
 
 public interface RegionService {
     List<SidoDto> getAllSido();
+
     List<GugunDto> getAllGugun(String sidoCode);
-    List<DongDto> getAllDong(String sidoCode);
+
+    List<DongDto> getAllDong(String gugunCode);
+
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GugunDto{
+public class GugunDto {
     private String code;
     private String name;
 }
