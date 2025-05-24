@@ -1,11 +1,15 @@
 package com.warrr.zipflex.api.region.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import com.warrr.zipflex.api.region.dto.DongDto;
 import com.warrr.zipflex.api.region.dto.GugunDto;
 import com.warrr.zipflex.api.region.dto.SidoDto;
 import com.warrr.zipflex.api.region.service.RegionService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @RestController
@@ -20,13 +24,13 @@ public class RegionController {
         return regionService.getAllSido();
     }
 
-    @GetMapping("/gugun")
-    public List<GugunDto> getGugun(@RequestParam String sidoCode) {
+    @GetMapping("/sido/{sidoCode}/gugun")
+    public List<GugunDto> getGugun(@PathVariable String sidoCode) {
         return regionService.getAllGugun(sidoCode);
     }
 
-    @GetMapping("/dong")
-    public List<DongDto> getDong(@RequestParam String gugunCode) {
+    @GetMapping("/gugun/{gugunCode}/dong")
+    public List<DongDto> getDong(@PathVariable String gugunCode) {
         return regionService.getAllDong(gugunCode);
     }
 }
