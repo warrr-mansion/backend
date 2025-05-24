@@ -10,4 +10,6 @@ public interface AuthService {
 
     JwtTokenResponseDto signIn(SignInRequestDto requestDto);
     
+    String reissueAccessToken(String refreshToken);
+    
 }

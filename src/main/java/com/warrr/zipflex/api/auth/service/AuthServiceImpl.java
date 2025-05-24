@@ -1,9 +1,9 @@
 package com.warrr.zipflex.api.auth.service;
 
-import static com.warrr.zipflex.global.response.BaseResponseStatus.FAILED_TO_LOGIN;
 import static com.warrr.zipflex.api.auth.domain.model.TokenType.ACCESS_TOKEN;
 import static com.warrr.zipflex.api.auth.domain.model.TokenType.REFRESH_TOKEN;
-
+import static com.warrr.zipflex.global.response.BaseResponseStatus.FAILED_TO_LOGIN;
+import static com.warrr.zipflex.global.response.BaseResponseStatus.WRONG_JWT_TOKEN;
 import java.util.Optional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final MemberDao memberDao;
     private final JwtTokenService jwtTokenService;
-    
+
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
@@ -42,19 +42,31 @@ public class AuthServiceImpl implements AuthService {
     @Transactional(readOnly = true)
     @Override
     public JwtTokenResponseDto signIn(SignInRequestDto requestDto) {
-        
-        SignInResponseDto signInMember = Optional.ofNullable(memberDao.findByEmail(requestDto.getEmail()))
-                        .orElseThrow(() -> new BaseException(FAILED_TO_LOGIN));
+
+        SignInResponseDto signInMember =
+                        Optional.ofNullable(memberDao.findByEmail(requestDto.getEmail()))
+                                        .orElseThrow(() -> new BaseException(FAILED_TO_LOGIN));
         Authentication authentication =
                         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                                         signInMember.getMemberUuid(), requestDto.getPassword()));
         String refreshToken = jwtTokenProvider.generateToken(authentication, REFRESH_TOKEN);
-        
+
         jwtTokenService.saveRefreshToken(signInMember.getMemberUuid(), refreshToken);
         return JwtTokenResponseDto.builder()
                         .accessToken(jwtTokenProvider.generateToken(authentication, ACCESS_TOKEN))
-                        .refreshToken(refreshToken)
-                        .uuid(signInMember.getMemberUuid())
-                        .build();
+                        .refreshToken(refreshToken).uuid(signInMember.getMemberUuid()).build();
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public String reissueAccessToken(String refreshToken) {
+        Optional.ofNullable(jwtTokenService
+                        .findRefreshTokenByUuid(jwtTokenProvider.getUserUuidByToken(refreshToken)))
+                        .filter(token -> token.equals(refreshToken))
+                        .orElseThrow(() -> new BaseException(WRONG_JWT_TOKEN));
+
+        return jwtTokenProvider.generateToken(jwtTokenProvider.getAuthentication(refreshToken),
+                        ACCESS_TOKEN);
+    }
+
 }

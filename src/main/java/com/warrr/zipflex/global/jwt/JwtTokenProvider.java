@@ -44,19 +44,20 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication, TokenType token) {
         Date now = new Date();
-        Date expiration = new Date(
-                        now.getTime() + (token == ACCESS_TOKEN ? jwtProperties.getAccessTokenExpireTime()
+        Date expiration = new Date(now.getTime()
+                        + (token == ACCESS_TOKEN ? jwtProperties.getAccessTokenExpireTime()
                                         : jwtProperties.getRefreshTokenExpireTime()));
         String roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                         .collect(Collectors.joining(","));
 
         Claims claims = Jwts.claims().subject(authentication.getName()).add("roles", roles).build();
-
-        return Jwts.builder().header().add("typ", "JWT").and()
+        
+        return Jwts.builder()
+                        .header().add("typ", "JWT").and()
                         .issuer(jwtProperties.getIssuer())
                         .issuedAt(now)
                         .expiration(expiration)
-                        .subject(claims.getSubject())
+                        .claims(claims)
                         .signWith(getSecretKey())
                         .compact();
     }

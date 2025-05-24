@@ -8,7 +8,6 @@ import com.warrr.zipflex.global.jwt.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Transactional
 @Service
 public class JwtTokenServiceImpl implements JwtTokenService {
 
@@ -17,10 +16,17 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     private static final String TOKEN_PREFIX = "refreshToken:";
 
+    @Transactional
     @Override
     public void saveRefreshToken(String uuid, String refreshToken) {
         redisTemplate.opsForValue().set(TOKEN_PREFIX + uuid, refreshToken,
                         jwtProperties.getRefreshTokenExpireTime(), TimeUnit.MILLISECONDS);
+    }
+    
+    @Transactional(readOnly = true)
+    @Override
+    public String findRefreshTokenByUuid(String uuid) {
+        return (String) redisTemplate.opsForValue().get(TOKEN_PREFIX + uuid);
     }
 
 }

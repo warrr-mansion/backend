@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum Role {
 
     VISITOR("visitor"),
+    SELLER("seller"),
     ADMIN("admin");
     
     private final String role;
