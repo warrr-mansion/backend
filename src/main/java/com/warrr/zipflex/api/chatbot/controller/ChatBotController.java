@@ -20,7 +20,7 @@ public class ChatBotController {
 
     private final ChatBotService chatBotService;
     
-    @Operation(summary = "챗봇 대화 API")
+    @Operation(summary = "챗봇 대화")
     @PostMapping
     public BaseResponse<ChatMessageResponseDto> sendMessage(@RequestBody ChatMessageRequestDto requestDto) {
         return new BaseResponse<>(chatBotService.saveMessage(requestDto));
