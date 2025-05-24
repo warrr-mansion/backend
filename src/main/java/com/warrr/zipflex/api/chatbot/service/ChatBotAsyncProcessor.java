@@ -19,7 +19,7 @@ public class ChatBotAsyncProcessor {
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;
 
-    private static final int MAX_CHAT_HISTORY = 20;
+    private static final int MAX_CHAT_HISTORY = 10;
 
     @Async
     public void saveMessageAsync(String key, String memberMessage, String assistMessage) {
