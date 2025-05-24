@@ -15,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "HouseInfo")
 @RestController
-@RequestMapping("/v1/houseinfo")
+@RequestMapping("/v1/houses")
 @RequiredArgsConstructor
 public class HouseInfoController {
     private final HouseInfoService houseInfoService;

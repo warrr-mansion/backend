@@ -19,8 +19,8 @@ public class ChatBotServiceImpl implements ChatBotService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final ObjectMapper objectMapper;
 
-    private static final String TOKEN_PREFIX = "chatUuid";
-    private static final int MAX_CHAT_HISTORY = 20;
+    private static final String TOKEN_PREFIX = "chatUUID:";
+    private static final int MAX_CHAT_HISTORY = 10;
 
     @Override
     @Transactional(readOnly = true)
