@@ -1,6 +1,8 @@
 package com.warrr.zipflex.global.jwt;
 
 import static com.warrr.zipflex.global.response.BaseResponseStatus.WRONG_JWT_TOKEN;
+import static com.warrr.zipflex.api.auth.domain.model.TokenType.ACCESS_TOKEN;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
@@ -12,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import com.warrr.zipflex.api.auth.domain.model.TokenType;
 import com.warrr.zipflex.global.exception.BaseException;
 import com.warrr.zipflex.global.jwt.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
@@ -39,15 +42,15 @@ public class JwtTokenProvider {
         return secretKey;
     }
 
-    public String generateToken(Authentication authentication, long expiredAt) {
+    public String generateToken(Authentication authentication, TokenType token) {
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + expiredAt);
-        String roles = authentication.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority)
+        Date expiration = new Date(
+                        now.getTime() + (token == ACCESS_TOKEN ? jwtProperties.getAccessTokenExpireTime()
+                                        : jwtProperties.getRefreshTokenExpireTime()));
+        String roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                         .collect(Collectors.joining(","));
-        
-        Claims claims = Jwts.claims().subject(authentication.getName())
-                        .add("roles", roles).build();
+
+        Claims claims = Jwts.claims().subject(authentication.getName()).add("roles", roles).build();
 
         return Jwts.builder().header().add("typ", "JWT").and()
                         .issuer(jwtProperties.getIssuer())
@@ -57,19 +60,17 @@ public class JwtTokenProvider {
                         .signWith(getSecretKey())
                         .compact();
     }
-    
+
     public Authentication getAuthentication(String token) {
         Claims claims = parseClaims(token);
         String roles = claims.get("roles", String.class);
-        Set<SimpleGrantedAuthority> authorities = Arrays.stream(roles.split(","))
-                        .map(String::trim)
-                        .map(role -> new SimpleGrantedAuthority(role))
-                        .collect(Collectors.toSet());
+        Set<SimpleGrantedAuthority> authorities = Arrays.stream(roles.split(",")).map(String::trim)
+                        .map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toSet());
 
         return new UsernamePasswordAuthenticationToken(
                         new User(claims.getSubject(), "", authorities), token, authorities);
     }
-    
+
     public boolean isValidToken(String token) {
         try {
             parseClaims(token.trim());
@@ -93,11 +94,9 @@ public class JwtTokenProvider {
                 log.error("토큰이 존재하지 않습니다");
                 throw new BaseException(WRONG_JWT_TOKEN);
             }
-            
-            return Jwts.parser()
-                        .verifyWith(getSecretKey())
-                        .build().parseSignedClaims(token)
-                        .getPayload();
+
+            return Jwts.parser().verifyWith(getSecretKey()).build().parseSignedClaims(token)
+                            .getPayload();
 
         } catch (ExpiredJwtException e) {
             log.error("만료된 토큰입니다");

@@ -18,7 +18,13 @@
 		SELECT member_uuid, nickname, email,
 			password, state, role
 		FROM member
-		WHERE member_uuid = #{member_uuid}
+		WHERE member_uuid = #{member_uuid};
+	</select>
+	
+	<select id="findByEmail" resultType="com.warrr.zipflex.api.auth.dto.out.SignInResponseDto">
+		SELECT member_uuid, email, password
+		FROM member
+		WHERE email = #{email};
 	</select>
 	
 </mapper>
