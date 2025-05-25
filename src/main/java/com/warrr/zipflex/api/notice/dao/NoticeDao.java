@@ -1,15 +1,16 @@
 package com.warrr.zipflex.api.notice.dao;
 
-import com.warrr.zipflex.api.notice.dto.in.NoticeCreateRequestDto;
 import com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto;
 import com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto;
 import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface NoticeDao {
 
-    void insertNotice(NoticeCreateRequestDto dto);
+    void insertNotice(Map<String, Object> param);
 
     List<NoticeInfoResponseDto> findAll();
 

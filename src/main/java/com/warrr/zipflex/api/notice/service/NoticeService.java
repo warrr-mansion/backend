@@ -7,7 +7,10 @@ import com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +19,12 @@ public class NoticeService {
     private final NoticeDao noticeDao;
 
     public void createNotice(NoticeCreateRequestDto dto) {
-        noticeDao.insertNotice(dto);
+        Map<String, Object> param = new HashMap<>();
+        param.put("title", dto.getTitle());
+        param.put("content", dto.getContent());
+        param.put("registDate", LocalDateTime.now());
+
+        noticeDao.insertNotice(param);
     }
 
     public List<NoticeInfoResponseDto> getAllNotices() {

@@ -1,7 +1,6 @@
 package com.warrr.zipflex.api.house.dto.out;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,4 +17,5 @@ public class DealInfoResponseDto {
     private int monthlyRent;
     private float exclusiveArea;
     private int floor;
+    private String contractType;
 }
