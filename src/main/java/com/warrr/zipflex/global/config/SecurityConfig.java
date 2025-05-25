@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -52,8 +51,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
-                        .formLogin(AbstractHttpConfigurer::disable)
+        http.csrf(AbstractHttpConfigurer::disable).formLogin(AbstractHttpConfigurer::disable)
                         .httpBasic(AbstractHttpConfigurer::disable)
                         .logout(AbstractHttpConfigurer::disable)
 
@@ -69,8 +67,7 @@ public class SecurityConfig {
                                         // .requestMatchers(HttpMethod.DELETE, "/v1/review")
                                         // .authenticated()
                                         // 인증이 필요한 URL 설정
-
-                                        .requestMatchers("/v1/mypage/**", "/v1/like/**")
+                                        .requestMatchers("/v1/member/**", "/v1/like/**")
                                         .authenticated().anyRequest().permitAll())
                         .sessionManagement(sessionManagement -> sessionManagement
                                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
