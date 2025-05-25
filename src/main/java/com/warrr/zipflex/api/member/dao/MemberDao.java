@@ -11,10 +11,12 @@ public interface MemberDao {
 
     void save(SignUpRequestDto requestDto);
 
-    Member findByUuid(String uuid);
+    Member findByUuid(String memberUuid);
 
     SignInResponseDto findByEmail(String email);
 
     EmailCheckResponseDto existsByEmail(String email);
+    
+    void updatePassword(String memberUuid, String encodedPassword);
     
 }

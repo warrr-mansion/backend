@@ -2,6 +2,9 @@ package com.warrr.zipflex.api.member.service;
 
 import static com.warrr.zipflex.global.response.BaseResponseStatus.NO_EXIST_USER;
 import static com.warrr.zipflex.global.response.BaseResponseStatus.NO_SIGN_IN;
+import static com.warrr.zipflex.global.response.BaseResponseStatus.PASSWORD_NOT_MATCHED;
+import static com.warrr.zipflex.global.response.BaseResponseStatus.PASSWORD_SAME_AS_CURRENT;
+
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.warrr.zipflex.api.auth.domain.model.AuthUserDetail;
 import com.warrr.zipflex.api.member.dao.MemberDao;
 import com.warrr.zipflex.api.member.domain.entity.Member;
+import com.warrr.zipflex.api.member.dto.in.PasswordUpdateRequestDto;
 import com.warrr.zipflex.api.member.dto.out.MemberResponseDto;
 import com.warrr.zipflex.api.member.dto.out.PasswordCheckResponseDto;
 import com.warrr.zipflex.global.exception.BaseException;
@@ -24,8 +28,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     @Override
     public MemberResponseDto getMemberInfo(AuthUserDetail authUserDetail) {
-        return MemberResponseDto
-                        .fromEntity(getAuthenticatedMember(authUserDetail));
+        return MemberResponseDto.fromEntity(getAuthenticatedMember(authUserDetail));
     }
 
     @Transactional(readOnly = true)
@@ -37,10 +40,25 @@ public class MemberServiceImpl implements MemberService {
                         getAuthenticatedMember(authUserDetail).getPassword()));
     }
 
+    @Transactional
+    @Override
+    public void changePassword(AuthUserDetail authUserDetail, PasswordUpdateRequestDto requestDto) {
+        Member member = getAuthenticatedMember(authUserDetail);
+
+        if (passwordEncoder.matches(requestDto.getNewPassword(), member.getPassword())) {
+            throw new BaseException(PASSWORD_SAME_AS_CURRENT);
+        }
+        if (!passwordEncoder.matches(requestDto.getCurrentPassword(), member.getPassword())) {
+            throw new BaseException(PASSWORD_NOT_MATCHED);
+        }
+
+        memberDao.updatePassword(authUserDetail.getUuid(),
+                        passwordEncoder.encode(requestDto.getNewPassword()));
+    }
+
     private Member getAuthenticatedMember(AuthUserDetail authUserDetail) {
-        return Optional.ofNullable(
-                        memberDao.findByUuid(Optional.ofNullable(authUserDetail.getUuid())
-                                        .orElseThrow(() -> new BaseException(NO_SIGN_IN))))
+        return Optional.ofNullable(memberDao.findByUuid(Optional.ofNullable(authUserDetail)
+                        .orElseThrow(() -> new BaseException(NO_SIGN_IN)).getUuid()))
                         .orElseThrow(() -> new BaseException(NO_EXIST_USER));
     }
 

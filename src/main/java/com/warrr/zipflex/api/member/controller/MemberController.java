@@ -2,19 +2,23 @@ package com.warrr.zipflex.api.member.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.warrr.zipflex.api.auth.domain.model.AuthUserDetail;
 import com.warrr.zipflex.api.member.dto.in.PasswordCheckRequestDto;
+import com.warrr.zipflex.api.member.dto.in.PasswordUpdateRequestDto;
 import com.warrr.zipflex.api.member.dto.out.MemberResponseDto;
 import com.warrr.zipflex.api.member.dto.out.PasswordCheckResponseDto;
 import com.warrr.zipflex.api.member.service.MemberService;
+import com.warrr.zipflex.api.member.vo.in.PasswordUpdateRequestVo;
 import com.warrr.zipflex.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Tag(name = "Member")
@@ -43,6 +47,16 @@ public class MemberController {
 
         return new BaseResponse<>(memberService.checkPassword(authUserDetail,
                         requestDto.getCurrentPassword()));
+    }
+
+    @SecurityRequirement(name = "JWT")
+    @Operation(summary = "비밀번호 변경", description = "기존 비밀번호 확인 후 새 비밀번호로 변경합니다.")
+    @PatchMapping("/password")
+    public BaseResponse<Void> updatePassword(@AuthenticationPrincipal AuthUserDetail authUserDetail,
+                    @Valid @RequestBody PasswordUpdateRequestVo requestVo) {
+
+        memberService.changePassword(authUserDetail, PasswordUpdateRequestDto.toDto(requestVo));
+        return new BaseResponse<>();
     }
 
 }
