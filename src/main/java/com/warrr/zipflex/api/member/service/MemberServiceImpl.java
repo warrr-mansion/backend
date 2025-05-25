@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.warrr.zipflex.api.auth.domain.model.AuthUserDetail;
+import com.warrr.zipflex.api.member.controller.NicknameUpdateRequestDto;
 import com.warrr.zipflex.api.member.dao.MemberDao;
 import com.warrr.zipflex.api.member.domain.entity.Member;
 import com.warrr.zipflex.api.member.dto.in.PasswordUpdateRequestDto;
@@ -54,6 +55,13 @@ public class MemberServiceImpl implements MemberService {
 
         memberDao.updatePassword(authUserDetail.getUuid(),
                         passwordEncoder.encode(requestDto.getNewPassword()));
+    }
+
+    @Transactional
+    @Override
+    public void changeNickname(AuthUserDetail authUserDetail, NicknameUpdateRequestDto requestDto) {
+        memberDao.updateNickname(getAuthenticatedMember(authUserDetail).getMemberUuid(),
+                        requestDto.getNickname());
     }
 
     private Member getAuthenticatedMember(AuthUserDetail authUserDetail) {

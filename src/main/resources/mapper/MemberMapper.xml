@@ -41,4 +41,11 @@
 		WHERE member_uuid = #{memberUuid};
 	</update>
 	
+	<!-- 닉네임 변경 -->
+	<update id="updateNickname">
+		UPDATE member
+		SET nickname = #{nickname}
+		WHERE member_uuid = #{memberUuid};
+	</update>
+	
 </mapper>

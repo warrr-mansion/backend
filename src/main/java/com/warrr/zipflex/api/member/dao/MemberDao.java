@@ -19,4 +19,6 @@ public interface MemberDao {
     
     void updatePassword(String memberUuid, String encodedPassword);
     
+    void updateNickname(String memberUuid, String nickname);
+    
 }

@@ -21,11 +21,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "Member")
-@RequestMapping("/v1/members")
+@Tag(name = "Authenticated Member")
+@RequestMapping("/v1/member")
 @RequiredArgsConstructor
 @RestController
-public class MemberController {
+public class AuthRequiredMemberController {
 
     private final MemberService memberService;
 
@@ -59,4 +59,14 @@ public class MemberController {
         return new BaseResponse<>();
     }
 
+    @SecurityRequirement(name = "JWT")
+    @Operation(summary = "닉네임 변경", description = "로그인한 회원의 닉네임을 수정합니다.")
+    @PatchMapping("/nickname")
+    public BaseResponse<Void> updateNickname(@AuthenticationPrincipal AuthUserDetail authUserDetail,
+                    @RequestBody NicknameUpdateRequestDto requestDto) {
+
+        memberService.changeNickname(authUserDetail, requestDto);
+        return new BaseResponse<>();
+    }
+    
 }
