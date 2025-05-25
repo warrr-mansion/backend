@@ -27,4 +27,11 @@
 		WHERE email = #{email};
 	</select>
 	
+	<!-- email 중복 체크 -->
+	<select id="existsByEmail" resultType="com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto">
+	    SELECT COUNT(*) > 0 AS is_duplicated
+	    FROM member
+	    WHERE email = #{email}
+	</select>
+	
 </mapper>

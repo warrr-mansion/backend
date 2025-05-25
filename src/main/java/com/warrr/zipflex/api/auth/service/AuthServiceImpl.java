@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.warrr.zipflex.api.auth.dto.in.SignInRequestDto;
 import com.warrr.zipflex.api.auth.dto.in.SignUpRequestDto;
+import com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto;
 import com.warrr.zipflex.api.auth.dto.out.JwtTokenResponseDto;
 import com.warrr.zipflex.api.auth.dto.out.SignInResponseDto;
 import com.warrr.zipflex.api.auth.vo.in.SignUpRequestVo;
@@ -68,4 +69,10 @@ public class AuthServiceImpl implements AuthService {
                         ACCESS_TOKEN);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public EmailCheckResponseDto checkEmail(String email) {
+        return memberDao.existsByEmail(email);
+    }
+    
 }

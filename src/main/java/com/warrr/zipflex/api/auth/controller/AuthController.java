@@ -1,11 +1,14 @@
 package com.warrr.zipflex.api.auth.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.warrr.zipflex.api.auth.dto.in.ReIssueTokenRequestDto;
 import com.warrr.zipflex.api.auth.dto.in.SignInRequestDto;
+import com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto;
 import com.warrr.zipflex.api.auth.dto.out.JwtTokenResponseDto;
 import com.warrr.zipflex.api.auth.service.AuthService;
 import com.warrr.zipflex.api.auth.vo.in.SignInRequestVo;
@@ -57,4 +60,9 @@ public class AuthController {
         return new BaseResponse<>();
     }
 
+    @Operation(summary = "이메일 중복 검사")
+    @GetMapping("/check-email/{email}")
+    public BaseResponse<EmailCheckResponseDto> checkEmail(@PathVariable String email) {
+        return new BaseResponse<>(authService.checkEmail(email));
+    }
 }
