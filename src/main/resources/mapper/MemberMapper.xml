@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="findByEmail" resultType="com.warrr.zipflex.api.auth.dto.out.SignInResponseDto">
-		SELECT member_uuid, email, password
+		SELECT member_uuid, email, password, role
 		FROM member
 		WHERE email = #{email};
 	</select>

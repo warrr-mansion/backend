@@ -52,9 +52,8 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = jwtTokenProvider.generateToken(authentication, REFRESH_TOKEN);
 
         jwtTokenService.saveRefreshToken(signInMember.getMemberUuid(), refreshToken);
-        return JwtTokenResponseDto.builder()
-                        .accessToken(jwtTokenProvider.generateToken(authentication, ACCESS_TOKEN))
-                        .refreshToken(refreshToken).uuid(signInMember.getMemberUuid()).build();
+        return signInMember.toJwtResponse(
+                        jwtTokenProvider.generateToken(authentication, ACCESS_TOKEN), refreshToken);
     }
 
     @Transactional(readOnly = true)
