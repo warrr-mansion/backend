@@ -33,11 +33,13 @@ public class NoticeController {
         return new BaseResponse<>(noticeService.getNotice(id));
     }
 
-    @PutMapping
-    public BaseResponse<Void> update(@RequestBody NoticeUpdateRequestDto dto) {
-        noticeService.updateNotice(dto);
+    @PutMapping("/{id}")
+    public BaseResponse<Void> update(@PathVariable Long id,
+                    @RequestBody NoticeUpdateRequestDto dto) {
+        noticeService.updateNotice(id, dto);
         return new BaseResponse<>();
     }
+
 
     @DeleteMapping("/{id}")
     public BaseResponse<Void> delete(@PathVariable Long id) {
