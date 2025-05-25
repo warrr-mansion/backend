@@ -4,6 +4,7 @@ import com.warrr.zipflex.api.region.dto.DongDto;
 import com.warrr.zipflex.api.region.dto.GugunDto;
 import com.warrr.zipflex.api.region.dto.SidoDto;
 import com.warrr.zipflex.api.region.service.RegionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Tag(name = "Region")
 @RestController
 @RequestMapping("/api/region")
 @RequiredArgsConstructor

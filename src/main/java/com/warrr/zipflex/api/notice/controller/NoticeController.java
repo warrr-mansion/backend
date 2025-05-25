@@ -5,11 +5,13 @@ import com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto;
 import com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto;
 import com.warrr.zipflex.api.notice.service.NoticeService;
 import com.warrr.zipflex.global.response.BaseResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Notice")
 @RestController
 @RequestMapping("/v1/notice")
 @RequiredArgsConstructor

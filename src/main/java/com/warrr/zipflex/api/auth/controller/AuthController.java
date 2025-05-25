@@ -31,7 +31,10 @@ public class AuthController {
     private final AuthService authService;
     private final JwtProperties jwtProperties;
 
-    @Operation(summary = "회원가입")
+    @Operation(summary = "회원가입", description = """
+                    닉네임 (1~12자, 따옴표 불가)\n\n
+                    비밀번호 (8~20자, 공백 없이 영문+숫자+특수문자 포함)
+                    """)
     @PostMapping("/sign-up")
     public BaseResponse<Void> signUp(@Valid @RequestBody SignUpRequestVo requestVo) {
         authService.signUp(requestVo);
