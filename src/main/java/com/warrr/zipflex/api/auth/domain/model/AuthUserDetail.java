@@ -33,6 +33,12 @@ public class AuthUserDetail implements UserDetails {
         this.authorities = authorities;
     }
     
+    @Builder
+    public AuthUserDetail(String uuid, Collection<? extends GrantedAuthority> authorities) {
+        this.uuid = uuid;
+        this.authorities = authorities;
+    }
+    
     public static AuthUserDetail fromMember(Member member, List<SimpleGrantedAuthority> authorities) {
         return AuthUserDetail.builder()
             .uuid(member.getMemberUuid())

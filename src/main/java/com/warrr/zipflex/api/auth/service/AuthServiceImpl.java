@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.warrr.zipflex.api.auth.dto.in.SignInRequestDto;
 import com.warrr.zipflex.api.auth.dto.in.SignUpRequestDto;
+import com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto;
 import com.warrr.zipflex.api.auth.dto.out.JwtTokenResponseDto;
 import com.warrr.zipflex.api.auth.dto.out.SignInResponseDto;
 import com.warrr.zipflex.api.auth.vo.in.SignUpRequestVo;
@@ -52,9 +53,8 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = jwtTokenProvider.generateToken(authentication, REFRESH_TOKEN);
 
         jwtTokenService.saveRefreshToken(signInMember.getMemberUuid(), refreshToken);
-        return JwtTokenResponseDto.builder()
-                        .accessToken(jwtTokenProvider.generateToken(authentication, ACCESS_TOKEN))
-                        .refreshToken(refreshToken).uuid(signInMember.getMemberUuid()).build();
+        return signInMember.toJwtResponse(
+                        jwtTokenProvider.generateToken(authentication, ACCESS_TOKEN), refreshToken);
     }
 
     @Transactional(readOnly = true)
@@ -69,4 +69,10 @@ public class AuthServiceImpl implements AuthService {
                         ACCESS_TOKEN);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public EmailCheckResponseDto checkEmail(String email) {
+        return memberDao.existsByEmail(email);
+    }
+    
 }

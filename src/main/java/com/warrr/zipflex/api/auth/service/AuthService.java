@@ -1,6 +1,7 @@
 package com.warrr.zipflex.api.auth.service;
 
 import com.warrr.zipflex.api.auth.dto.in.SignInRequestDto;
+import com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto;
 import com.warrr.zipflex.api.auth.dto.out.JwtTokenResponseDto;
 import com.warrr.zipflex.api.auth.vo.in.SignUpRequestVo;
 
@@ -11,5 +12,7 @@ public interface AuthService {
     JwtTokenResponseDto signIn(SignInRequestDto requestDto);
     
     String reissueAccessToken(String refreshToken);
+    
+    EmailCheckResponseDto checkEmail(String email);
     
 }

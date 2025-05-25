@@ -18,13 +18,34 @@
 		SELECT member_uuid, nickname, email,
 			password, state, role
 		FROM member
-		WHERE member_uuid = #{member_uuid};
+		WHERE member_uuid = #{memberUuid};
 	</select>
 	
 	<select id="findByEmail" resultType="com.warrr.zipflex.api.auth.dto.out.SignInResponseDto">
-		SELECT member_uuid, email, password
+		SELECT member_uuid, email, password, role
 		FROM member
 		WHERE email = #{email};
 	</select>
+	
+	<!-- email 중복 체크 -->
+	<select id="existsByEmail" resultType="com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto">
+	    SELECT COUNT(*) > 0 AS is_duplicated
+	    FROM member
+	    WHERE email = #{email};
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePassword">
+		UPDATE member
+		SET password = #{encodedPassword}
+		WHERE member_uuid = #{memberUuid};
+	</update>
+	
+	<!-- 닉네임 변경 -->
+	<update id="updateNickname">
+		UPDATE member
+		SET nickname = #{nickname}
+		WHERE member_uuid = #{memberUuid};
+	</update>
 	
 </mapper>

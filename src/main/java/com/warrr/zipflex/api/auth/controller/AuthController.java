@@ -1,11 +1,14 @@
 package com.warrr.zipflex.api.auth.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.warrr.zipflex.api.auth.dto.in.ReIssueTokenRequestDto;
 import com.warrr.zipflex.api.auth.dto.in.SignInRequestDto;
+import com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto;
 import com.warrr.zipflex.api.auth.dto.out.JwtTokenResponseDto;
 import com.warrr.zipflex.api.auth.service.AuthService;
 import com.warrr.zipflex.api.auth.vo.in.SignInRequestVo;
@@ -28,7 +31,10 @@ public class AuthController {
     private final AuthService authService;
     private final JwtProperties jwtProperties;
 
-    @Operation(summary = "회원가입")
+    @Operation(summary = "회원가입", description = """
+                    닉네임 (1~12자, 따옴표 불가)\n\n
+                    비밀번호 (8~20자, 공백 없이 영문+숫자+특수문자 포함)
+                    """)
     @PostMapping("/sign-up")
     public BaseResponse<Void> signUp(@Valid @RequestBody SignUpRequestVo requestVo) {
         authService.signUp(requestVo);
@@ -57,4 +63,10 @@ public class AuthController {
         return new BaseResponse<>();
     }
 
+    @Operation(summary = "이메일 중복 검사")
+    @GetMapping("/check-email/{email}")
+    public BaseResponse<EmailCheckResponseDto> checkEmail(@PathVariable String email) {
+        return new BaseResponse<>(authService.checkEmail(email));
+    }
+    
 }
