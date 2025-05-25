@@ -1,6 +1,5 @@
 package com.warrr.zipflex.api.notice.dao;
 
-import com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto;
 import com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,7 +15,7 @@ public interface NoticeDao {
 
     NoticeInfoResponseDto findById(Long id);
 
-    void updateNotice(NoticeUpdateRequestDto dto);
+    void updateNotice(Map<String, Object> param);
 
     void deleteNotice(Long id);
 

@@ -36,9 +36,16 @@ public class NoticeService {
         return noticeDao.findById(id);
     }
 
-    public void updateNotice(NoticeUpdateRequestDto dto) {
-        noticeDao.updateNotice(dto);
+    public void updateNotice(Long id, NoticeUpdateRequestDto dto) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("id", id); // 또는 param.put("id", dto.getId());
+        param.put("title", dto.getTitle());
+        param.put("content", dto.getContent());
+        param.put("registDate", LocalDateTime.now());
+
+        noticeDao.updateNotice(param);
     }
+
 
     public void deleteNotice(Long id) {
         noticeDao.deleteNotice(id);

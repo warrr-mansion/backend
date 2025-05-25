@@ -27,9 +27,7 @@
         WHERE id = #{id}
     </select>
 
-    <!-- 공지사항 수정 -->
-    <update id="updateNotice"
-            parameterType="com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto">
+    <update id="updateNotice">
         UPDATE notice
         SET title       = #{title},
             content     = #{content},
