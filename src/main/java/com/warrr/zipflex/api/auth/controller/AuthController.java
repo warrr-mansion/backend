@@ -68,4 +68,5 @@ public class AuthController {
     public BaseResponse<EmailCheckResponseDto> checkEmail(@PathVariable String email) {
         return new BaseResponse<>(authService.checkEmail(email));
     }
+    
 }
