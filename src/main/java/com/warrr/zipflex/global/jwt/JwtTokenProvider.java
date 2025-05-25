@@ -12,8 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import com.warrr.zipflex.api.auth.domain.model.AuthUserDetail;
 import com.warrr.zipflex.api.auth.domain.model.TokenType;
 import com.warrr.zipflex.global.exception.BaseException;
 import com.warrr.zipflex.global.jwt.properties.JwtProperties;
@@ -51,25 +51,21 @@ public class JwtTokenProvider {
                         .collect(Collectors.joining(","));
 
         Claims claims = Jwts.claims().subject(authentication.getName()).add("roles", roles).build();
-        
-        return Jwts.builder()
-                        .header().add("typ", "JWT").and()
-                        .issuer(jwtProperties.getIssuer())
-                        .issuedAt(now)
-                        .expiration(expiration)
-                        .claims(claims)
-                        .signWith(getSecretKey())
-                        .compact();
+
+        return Jwts.builder().header().add("typ", "JWT").and().issuer(jwtProperties.getIssuer())
+                        .issuedAt(now).expiration(expiration).claims(claims)
+                        .signWith(getSecretKey()).compact();
     }
 
     public Authentication getAuthentication(String token) {
         Claims claims = parseClaims(token);
         String roles = claims.get("roles", String.class);
         Set<SimpleGrantedAuthority> authorities = Arrays.stream(roles.split(",")).map(String::trim)
-                        .map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toSet());
+                        .map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
 
-        return new UsernamePasswordAuthenticationToken(
-                        new User(claims.getSubject(), "", authorities), token, authorities);
+        return new UsernamePasswordAuthenticationToken(AuthUserDetail.builder()
+                        .uuid(claims.getSubject()).authorities(authorities).build(), token,
+                        authorities);
     }
 
     public boolean isValidToken(String token) {
