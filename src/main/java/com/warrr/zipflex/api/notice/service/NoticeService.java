@@ -13,7 +13,7 @@ public interface NoticeService {
     
     NoticeInfoResponseDto getNotice(Long id);
     
-    void updateNotice(Long id, NoticeUpdateRequestDto requestDto);
+    void updateNotice(NoticeUpdateRequestDto requestDto);
     
     void deleteNotice(Long id);
     

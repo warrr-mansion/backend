@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.warrr.zipflex.api.notice.dto.in.NoticeCreateRequestDto;
 import com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto;
 import com.warrr.zipflex.api.notice.service.NoticeService;
+import com.warrr.zipflex.api.notice.vo.in.NoticeUpdateRequestVo;
 import com.warrr.zipflex.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +26,18 @@ public class AdminNoticeController {
     private final NoticeService noticeService;
 
     @PostMapping
-    public BaseResponse<Void> create(@RequestBody NoticeCreateRequestDto dto) {
-        noticeService.createNotice(dto);
+    public BaseResponse<Void> create(@RequestBody NoticeCreateRequestDto requestDto) {
+        noticeService.createNotice(requestDto);
         return new BaseResponse<>();
     }
 
     @PutMapping("/{id}")
     public BaseResponse<Void> update(@PathVariable Long id,
-                    @RequestBody NoticeUpdateRequestDto dto) {
+                    @RequestBody NoticeUpdateRequestVo requestVo) {
         
-        noticeService.updateNotice(id, dto);
+        noticeService.updateNotice(NoticeUpdateRequestDto.toDto(id, requestVo));
         return new BaseResponse<>();
     }
-
 
     @DeleteMapping("/{id}")
     public BaseResponse<Void> delete(@PathVariable Long id) {

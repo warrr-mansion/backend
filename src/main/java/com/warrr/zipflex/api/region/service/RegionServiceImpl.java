@@ -2,6 +2,7 @@ package com.warrr.zipflex.api.region.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.warrr.zipflex.api.region.dao.RegionDao;
 import com.warrr.zipflex.api.region.dto.DongDto;
 import com.warrr.zipflex.api.region.dto.GugunDto;
@@ -9,6 +10,7 @@ import com.warrr.zipflex.api.region.dto.SidoDto;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class RegionServiceImpl implements RegionService {
 
