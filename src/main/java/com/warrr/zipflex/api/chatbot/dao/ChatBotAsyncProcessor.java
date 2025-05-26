@@ -1,10 +1,10 @@
-package com.warrr.zipflex.api.chatbot.service;
+package com.warrr.zipflex.api.chatbot.dao;
 
 import static com.warrr.zipflex.api.chatbot.domain.model.RoleType.ASSISTANT;
 import static com.warrr.zipflex.api.chatbot.domain.model.RoleType.MEMBER;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +12,7 @@ import com.warrr.zipflex.api.chatbot.domain.document.ChatMessage;
 import com.warrr.zipflex.api.chatbot.domain.model.RoleType;
 import lombok.RequiredArgsConstructor;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 public class ChatBotAsyncProcessor {
 

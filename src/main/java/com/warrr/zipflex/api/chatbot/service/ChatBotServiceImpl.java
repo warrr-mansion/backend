@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.warrr.zipflex.api.chatbot.dao.ChatBotAsyncProcessor;
 import com.warrr.zipflex.api.chatbot.domain.document.ChatMessage;
 import com.warrr.zipflex.api.chatbot.dto.in.ChatMessageRequestDto;
 import com.warrr.zipflex.api.chatbot.dto.out.ChatMessageResponseDto;

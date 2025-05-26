@@ -28,8 +28,6 @@ public class HouseInfoServiceImpl implements HouseInfoService {
     public CursorPage<HouseInfoResponseDto> findHouseInfoWithPagination(String buildingType,
                     String sgg, String emd, PageRequestDto requestDto) {
 
-
-
         // 파라미터 맵 구성
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("buildingType", buildingType);
@@ -49,7 +47,8 @@ public class HouseInfoServiceImpl implements HouseInfoService {
             dtoList = dtoList.subList(0, pageSize);
         }
 
-        Long nextCursor = hasNext && !dtoList.isEmpty() ? dtoList.get(dtoList.size() - 1).getId() : null;
+        Long nextCursor = hasNext && !dtoList.isEmpty() ? dtoList.get(dtoList.size() - 1).getId()
+                        : null;
 
         return CursorPage.<HouseInfoResponseDto>builder().content(dtoList).pageSize(pageSize)
                         .pageNo(pageNo).hasNext(hasNext).nextCursor(nextCursor).build();
