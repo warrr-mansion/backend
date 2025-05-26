@@ -1,4 +1,4 @@
-package com.warrr.zipflex.api.member.controller;
+package com.warrr.zipflex.api.member.dto.in;
 
 import lombok.Getter;
 

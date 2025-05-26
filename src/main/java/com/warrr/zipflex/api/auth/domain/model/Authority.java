@@ -18,11 +18,11 @@ public enum Authority {
 
     public static List<SimpleGrantedAuthority> getAuthorities(Role role) {
         return switch (role) {
-            case ADMIN -> List.of(new SimpleGrantedAuthority(ADMIN.toString()),
-                            new SimpleGrantedAuthority(USER.toString()));
-            case SELLER -> List.of(new SimpleGrantedAuthority(SELLER.toString()),
-                            new SimpleGrantedAuthority(USER.toString()));
-            case VISITOR -> List.of(new SimpleGrantedAuthority(USER.toString()));
+            case ADMIN -> List.of(new SimpleGrantedAuthority(ADMIN.getAuthority()),
+                            new SimpleGrantedAuthority(USER.getAuthority()));
+            case SELLER -> List.of(new SimpleGrantedAuthority(SELLER.getAuthority()),
+                            new SimpleGrantedAuthority(USER.getAuthority()));
+            case VISITOR -> List.of(new SimpleGrantedAuthority(USER.getAuthority()));
         };
     }
 

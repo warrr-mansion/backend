@@ -1,7 +1,7 @@
 package com.warrr.zipflex.api.member.service;
 
 import com.warrr.zipflex.api.auth.domain.model.AuthUserDetail;
-import com.warrr.zipflex.api.member.controller.NicknameUpdateRequestDto;
+import com.warrr.zipflex.api.member.dto.in.NicknameUpdateRequestDto;
 import com.warrr.zipflex.api.member.dto.in.PasswordUpdateRequestDto;
 import com.warrr.zipflex.api.member.dto.out.MemberResponseDto;
 import com.warrr.zipflex.api.member.dto.out.PasswordCheckResponseDto;
