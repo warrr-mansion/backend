@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    WHERE is_deleted = false
 	    ORDER BY regist_date DESC
 	    LIMIT #{limitPlusOne}
-	    OFFSET #{offset}
+	    OFFSET #{offset};
 	</select>
 
 	<delete id="deleteComment">

@@ -17,4 +17,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    VALUES(#{code}, #{memberUuid});
 	</insert>
 
+	<delete id="deleteByCodeAndMemberUuid">
+		DELETE FROM interested_legal_district
+		WHERE legal_district_code = #{code} AND member_uuid = #{memberUuid};
+	</delete>
+
+	<select id="findAllByMemberUuidAndPage"
+		parameterType="com.warrr.zipflex.api.favorite.dto.in.FavoritePageRequestDto"
+		resultType="com.warrr.zipflex.api.favorite.dto.out.FavoriteRegionResponseDto">
+		
+		SELECT id, code AS region_code, sido_name, gugun_name, dong_name
+		FROM interested_legal_district i
+		JOIN legal_district l ON i.legal_district_code = l.code
+		WHERE member_uuid = #{memberUuid}
+		ORDER BY id DESC
+		LIMIT #{requestDto.limitPlusOne} 
+		OFFSET #{requestDto.offset};
+		
+	</select>
+
 </mapper>

@@ -1,8 +1,8 @@
 package com.warrr.zipflex.api.region.controller;
 
-import com.warrr.zipflex.api.region.dto.DongDto;
-import com.warrr.zipflex.api.region.dto.GugunDto;
-import com.warrr.zipflex.api.region.dto.SidoDto;
+import com.warrr.zipflex.api.region.dto.out.DongResponseDto;
+import com.warrr.zipflex.api.region.dto.out.GugunResponseDto;
+import com.warrr.zipflex.api.region.dto.out.SidoResponseDto;
 import com.warrr.zipflex.api.region.service.RegionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,19 +24,19 @@ public class RegionController {
 
     @Operation(summary = "시·도 목록 조회")
     @GetMapping("/sido")
-    public List<SidoDto> getSido() {
+    public List<SidoResponseDto> getSido() {
         return regionService.getAllSido();
     }
 
     @Operation(summary = "구·군 목록 조회")
     @GetMapping("/sido/{sidoCode}/gugun")
-    public List<GugunDto> getGugun(@PathVariable String sidoCode) {
+    public List<GugunResponseDto> getGugun(@PathVariable String sidoCode) {
         return regionService.getAllGugun(sidoCode);
     }
 
     @Operation(summary = "동 목록 조회")
     @GetMapping("/gugun/{gugunCode}/dong")
-    public List<DongDto> getDong(@PathVariable String gugunCode) {
+    public List<DongResponseDto> getDong(@PathVariable String gugunCode) {
         return regionService.getAllDong(gugunCode);
     }
 }
