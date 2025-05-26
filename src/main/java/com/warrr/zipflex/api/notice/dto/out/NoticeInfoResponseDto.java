@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NoticeInfoResponseDto {
+    
     private Long id;
     private String title;
     private String content;

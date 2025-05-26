@@ -1,6 +1,7 @@
 package com.warrr.zipflex.api.house.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,11 +11,10 @@ import com.warrr.zipflex.api.house.service.DealInfoService;
 import com.warrr.zipflex.global.response.BaseResponse;
 import com.warrr.zipflex.global.support.CursorPage;
 import com.warrr.zipflex.global.support.PageRequestDto;
-import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 
 @Tag(name = "HouseDeal")
 @RestController
@@ -86,7 +86,7 @@ public class DealInfoController {
                                     required = false) String contractType,
                     @Parameter(description = "시군구 코드") @RequestParam(required = false) String sgg,
                     @Parameter(description = "읍면동 코드") @RequestParam(required = false) String emd,
-                    @ParameterObject PageRequestDto requestDto) {
+                    @ModelAttribute PageRequestDto requestDto) {
         return new BaseResponse<>((CursorPage<DealInfoResponseDto>) dealInfoService
                         .getDealInfoByFilterWithPagination(buildingType, contractType, sgg, emd,
                                         requestDto));
@@ -107,7 +107,7 @@ public class DealInfoController {
     public BaseResponse<CursorPage<DealInfoResponseDto>> getDealInfoByHouseInfoIdWithPagination(
                     @Parameter(description = "house_info_id") @PathVariable String id,
                     @Parameter(description = "건물 유형 (apartment, villa, officetel)") @PathVariable String buildingType,
-                    @ParameterObject PageRequestDto requestDto) {
+                    @ModelAttribute PageRequestDto requestDto) {
         return new BaseResponse<>(dealInfoService
                         .getDealInfoByHouseInfoIdWithPagination(buildingType, id, requestDto));
     }

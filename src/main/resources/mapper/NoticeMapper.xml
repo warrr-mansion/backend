@@ -11,16 +11,20 @@
         VALUES (#{title}, #{content}, NOW())
     </insert>
 
-    <!-- 전체 공지사항 조회 -->
-    <select id="findAll"
-            resultType="com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto">
-        SELECT id, title, content, regist_date
-        FROM notice
-        ORDER BY regist_date DESC
-    </select>
+    <!-- 페이지네이션 공지사항 조회 -->
+    <select id="findAllByPage"
+        parameterType="com.warrr.zipflex.global.support.PageRequestDto"
+        resultType="com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto">
+    
+	    SELECT id, title, content, regist_date
+	    FROM notice
+	    ORDER BY id
+	    LIMIT #{limitPlusOne}
+	    OFFSET #{offset}
+	</select>
 
     <!-- ID로 공지사항 조회 -->
-    <select id="findById" parameterType="long"
+    <select id="findById"
             resultType="com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto">
         SELECT id, title, content, regist_date
         FROM notice
