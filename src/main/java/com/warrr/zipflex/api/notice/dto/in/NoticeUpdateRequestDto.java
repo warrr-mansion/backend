@@ -9,20 +9,20 @@ import lombok.ToString;
 @ToString
 public class NoticeUpdateRequestDto {
 
-    private Long id;
+    private Long noticeId;
     private String title;
     private String content;
     
     @Builder
-    public NoticeUpdateRequestDto(Long id, String title, String content) {
-        this.id = id;
+    public NoticeUpdateRequestDto(Long noticeId, String title, String content) {
+        this.noticeId = noticeId;
         this.title = title;
         this.content = content;
     }
     
-    public static NoticeUpdateRequestDto toDto(Long id, NoticeUpdateRequestVo requestVo) {
+    public static NoticeUpdateRequestDto toDto(Long noticeId, NoticeUpdateRequestVo requestVo) {
         return NoticeUpdateRequestDto.builder()
-                        .id(id)
+                        .noticeId(noticeId)
                         .title(requestVo.getTitle())
                         .content(requestVo.getContent())
                         .build();

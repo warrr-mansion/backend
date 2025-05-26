@@ -14,10 +14,10 @@ public interface NoticeDao {
 
     List<NoticeInfoResponseDto> findAllByPage(PageRequestDto requestDto);
 
-    NoticeInfoResponseDto findById(Long id);
+    NoticeInfoResponseDto findById(Long noticeId);
 
     void updateNotice(NoticeUpdateRequestDto requestDto);
 
-    void deleteNotice(Long id);
+    void deleteNotice(Long noticeId);
     
 }

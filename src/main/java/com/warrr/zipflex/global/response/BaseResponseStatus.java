@@ -47,7 +47,13 @@ public enum BaseResponseStatus {
     /**
      * 800: Notice 에러.
      */
-    NO_EXIST_NOTICE(HttpStatus.NOT_FOUND, false, 804, "존재하지 않는 공지사항입니다.");
+    NO_EXIST_NOTICE(HttpStatus.NOT_FOUND, false, 804, "존재하지 않는 공지사항입니다."),
+    
+    /**
+     * 900: Comment 에러.
+     */
+    NO_COMMENT_MODIFY_AUTHORITY(HttpStatus.FORBIDDEN, false, 903, "댓글 수정 권한이 없습니다. 관리자에게 문의해주시기 바랍니다."),
+    NO_EXIST_COMMENT(HttpStatus.NOT_FOUND, false, 904, "존재하지 않는 댓글입니다.");
     
     private final HttpStatus httpStatus;
     private final boolean isSuccess;

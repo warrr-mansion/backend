@@ -44,8 +44,8 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Transactional(readOnly = true)
     @Override
-    public NoticeInfoResponseDto getNotice(Long id) {
-        return Optional.ofNullable(noticeDao.findById(id))
+    public NoticeInfoResponseDto getNotice(Long noticeId) {
+        return Optional.ofNullable(noticeDao.findById(noticeId))
                         .orElseThrow(() -> new BaseException(NO_EXIST_NOTICE));
     }
 
@@ -55,8 +55,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void deleteNotice(Long id) {
-        noticeDao.deleteNotice(id);
+    public void deleteNotice(Long noticeId) {
+        noticeDao.deleteNotice(noticeId);
     }
 
 }
