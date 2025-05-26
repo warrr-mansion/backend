@@ -16,7 +16,7 @@ import java.util.List;
 
 @Tag(name = "Region")
 @RestController
-@RequestMapping("/api/region")
+@RequestMapping("/v1/regions")
 @RequiredArgsConstructor
 public class RegionController {
 
