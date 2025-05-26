@@ -17,4 +17,6 @@ public interface CommentService {
 
     CursorPage<CommentResponseDto> getComments(CommentPageRequestDto requestDto);
 
+    CommentResponseDto getComment(Long commentId);
+
 }

@@ -34,18 +34,18 @@ public class AdminNoticeController {
     }
 
     @Operation(summary = "공지사항 수정 (Admin Only)")
-    @PutMapping("/{id}")
-    public BaseResponse<Void> update(@PathVariable Long id,
+    @PutMapping("/{noticeId}")
+    public BaseResponse<Void> update(@PathVariable Long noticeId,
                     @RequestBody NoticeUpdateRequestVo requestVo) {
         
-        noticeService.updateNotice(NoticeUpdateRequestDto.toDto(id, requestVo));
+        noticeService.updateNotice(NoticeUpdateRequestDto.toDto(noticeId, requestVo));
         return new BaseResponse<>();
     }
 
     @Operation(summary = "공지사항 삭제 (Admin Only)")
-    @DeleteMapping("/{id}")
-    public BaseResponse<Void> delete(@PathVariable Long id) {
-        noticeService.deleteNotice(id);
+    @DeleteMapping("/{noticeId}")
+    public BaseResponse<Void> delete(@PathVariable Long noticeId) {
+        noticeService.deleteNotice(noticeId);
         return new BaseResponse<>();
     }
 

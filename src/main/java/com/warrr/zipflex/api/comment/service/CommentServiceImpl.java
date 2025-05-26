@@ -40,29 +40,26 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void updateComment(Long id, CommentUpdateRequestVo requestVo,
+    public void updateComment(Long commentId, CommentUpdateRequestVo requestVo,
                     AuthUserDetail authUserDetail) {
 
         String memberUuid = getAuthenticatedMemberUuid(authUserDetail);
 
-        if (!Optional.ofNullable(commentDao.findById(id))
-                        .orElseThrow(() -> new BaseException(NO_EXIST_COMMENT)).getMemberUuid()
-                        .equals(memberUuid)) {
+        if (!getComment(commentId).getMemberUuid().equals(memberUuid)) {
             throw new BaseException(NO_COMMENT_MODIFY_AUTHORITY);
         }
 
-        commentDao.updateComment(CommentUpdateRequestDto.toDto(id, requestVo, memberUuid));
+        commentDao.updateComment(CommentUpdateRequestDto.toDto(commentId, requestVo, memberUuid));
     }
 
     @Override
-    public void deleteComment(Long id, AuthUserDetail authUserDetail) {
-        if (!Optional.ofNullable(commentDao.findById(id))
-                        .orElseThrow(() -> new BaseException(NO_EXIST_COMMENT)).getMemberUuid()
+    public void deleteComment(Long commentId, AuthUserDetail authUserDetail) {
+        if (!getComment(commentId).getMemberUuid()
                         .equals(getAuthenticatedMemberUuid(authUserDetail))) {
             throw new BaseException(NO_COMMENT_MODIFY_AUTHORITY);
         }
 
-        commentDao.deleteComment(id);
+        commentDao.deleteComment(commentId);
     }
 
     @Transactional(readOnly = true)
@@ -78,6 +75,13 @@ public class CommentServiceImpl implements CommentService {
         return CursorPage.<CommentResponseDto>builder().content(content).hasNext(hasNext)
                         .nextCursor(nextCursor).pageSize(content.size())
                         .pageNo(requestDto.getPageNo()).build();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public CommentResponseDto getComment(Long commentId) {
+        return Optional.ofNullable(commentDao.findById(commentId))
+                        .orElseThrow(() -> new BaseException(NO_EXIST_COMMENT));
     }
 
     private String getAuthenticatedMemberUuid(AuthUserDetail authUserDetail) {

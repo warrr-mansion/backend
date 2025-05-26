@@ -12,10 +12,10 @@ public interface NoticeService {
     
     CursorPage<NoticeInfoResponseDto> getNoticesByPage(PageRequestDto requestDto);
     
-    NoticeInfoResponseDto getNotice(Long id);
+    NoticeInfoResponseDto getNotice(Long noticeId);
     
     void updateNotice(NoticeUpdateRequestDto requestDto);
     
-    void deleteNotice(Long id);
+    void deleteNotice(Long noticeId);
     
 }

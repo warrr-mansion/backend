@@ -24,12 +24,19 @@ public class CommentController {
 
     @Operation(summary = "댓글 목록 조회 (페이지네이션)")
     @GetMapping("/houses/{houseInfoId}/comments")
-    public BaseResponse<CursorPage<CommentResponseDto>> getComments(@PathVariable Long houseInfoId,
+    public BaseResponse<CursorPage<CommentResponseDto>> list(@PathVariable Long houseInfoId,
                     @RequestParam(defaultValue = "1") int pageNo,
                     @RequestParam(defaultValue = "10") int pageSize) {
 
         return new BaseResponse<>(commentService
                         .getComments(CommentPageRequestDto.toDto(houseInfoId, pageNo, pageSize)));
+    }
+
+    @Operation(summary = "댓글 단건 조회")
+    @GetMapping("/comments/{commentId}")
+    public BaseResponse<CommentResponseDto> detail(@PathVariable Long commentId) {
+
+        return new BaseResponse<>(commentService.getComment(commentId));
     }
 
 }
