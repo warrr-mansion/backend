@@ -13,6 +13,7 @@ import com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto;
 import com.warrr.zipflex.api.notice.service.NoticeService;
 import com.warrr.zipflex.api.notice.vo.in.NoticeUpdateRequestVo;
 import com.warrr.zipflex.global.response.BaseResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -25,12 +26,14 @@ public class AdminNoticeController {
 
     private final NoticeService noticeService;
 
+    @Operation(summary = "공지사항 작성 (Admin Only)")
     @PostMapping
     public BaseResponse<Void> create(@RequestBody NoticeCreateRequestDto requestDto) {
         noticeService.createNotice(requestDto);
         return new BaseResponse<>();
     }
 
+    @Operation(summary = "공지사항 수정 (Admin Only)")
     @PutMapping("/{id}")
     public BaseResponse<Void> update(@PathVariable Long id,
                     @RequestBody NoticeUpdateRequestVo requestVo) {
@@ -39,6 +42,7 @@ public class AdminNoticeController {
         return new BaseResponse<>();
     }
 
+    @Operation(summary = "공지사항 삭제 (Admin Only)")
     @DeleteMapping("/{id}")
     public BaseResponse<Void> delete(@PathVariable Long id) {
         noticeService.deleteNotice(id);
