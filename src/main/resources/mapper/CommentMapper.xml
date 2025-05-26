@@ -20,6 +20,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM comment
         WHERE id = #{id};
     </select>
+    
+    <select id="findAllByHouseInfoIdAndPage"
+        parameterType="com.warrr.zipflex.api.comment.dto.in.CommentPageRequestDto"
+        resultType="com.warrr.zipflex.api.comment.dto.out.CommentResponseDto">
+    
+	    SELECT id AS comment_id, house_info_id, member_uuid, nickname, content, regist_date, modify_date
+	    FROM comment
+	    WHERE is_deleted = false
+	    ORDER BY regist_date DESC
+	    LIMIT #{limitPlusOne}
+	    OFFSET #{offset}
+	</select>
 
 	<delete id="deleteComment">
         UPDATE comment
