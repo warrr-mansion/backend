@@ -1,4 +1,4 @@
-package com.warrr.zipflex.api.comment.dto;
+package com.warrr.zipflex.api.comment.dto.in;
 
 import com.warrr.zipflex.api.comment.vo.in.CommentCreateRequestVo;
 import lombok.Builder;
