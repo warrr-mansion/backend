@@ -29,6 +29,9 @@ public enum BaseResponseStatus {
     NO_ACCESS_AUTHORITY(HttpStatus.FORBIDDEN, false, 403, "접근 권한이 없습니다. 관리자에게 문의해주시기 바랍니다."),
     NO_EXIST_USER(HttpStatus.NOT_FOUND, false, 404, "존재하지 않는 사용자입니다."),
     
+    DATABASE_CONSTRAINT_VIOLATION(HttpStatus.CONFLICT, false, 409, "데이터베이스 제약 조건을 위반했습니다. "
+                    + "(유니크 키 중복, 외래 키 위반, NOT NULL 위반 등에서 발생합니다.)"),
+    
     /**
      * 500: 기타 에러.
      */
@@ -40,7 +43,7 @@ public enum BaseResponseStatus {
     INVALID_ROLE(HttpStatus.BAD_REQUEST, false, 601, "지원하지 않는 RoleType입니다."),
   
     /**
-     * 700: House Domain 에러.
+     * 700: House 에러.
      */
     INVALID_BUILDING_TYPE(HttpStatus.BAD_REQUEST, false, 701, "지원하지 않는 BuildingType입니다."),
 
@@ -53,7 +56,13 @@ public enum BaseResponseStatus {
      * 900: Comment 에러.
      */
     NO_COMMENT_MODIFY_AUTHORITY(HttpStatus.FORBIDDEN, false, 903, "댓글 수정 권한이 없습니다. 관리자에게 문의해주시기 바랍니다."),
-    NO_EXIST_COMMENT(HttpStatus.NOT_FOUND, false, 904, "존재하지 않는 댓글입니다.");
+    NO_EXIST_COMMENT(HttpStatus.NOT_FOUND, false, 904, "존재하지 않는 댓글입니다."),
+    
+    /**
+     * 1000: Favorite 에러.
+     */
+    INVALID_FAVORITE_TYPE(HttpStatus.BAD_REQUEST, false, 1001, "지원하지 않는 FavoriteType입니다."),
+    ALREADY_FAVORITED(HttpStatus.CONFLICT, false, 1009, "이미 찜한 항목입니다.");
     
     private final HttpStatus httpStatus;
     private final boolean isSuccess;

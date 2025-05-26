@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.warrr.zipflex.api.favorite.dao.FavoriteHouseDao">
+
+	<select id="existsByCodeAndMemberUuid">
+	    SELECT COUNT(*) > 0
+	    FROM house_wishlist
+	    WHERE house_info_id = #{code} AND member_uuid = #{memberUuid};
+	</select>
+	
+	<insert id="insert">
+	    INSERT INTO house_wishlist(house_info_id, member_uuid)
+	    VALUES(#{code}, #{memberUuid});
+	</insert>
+
+</mapper>

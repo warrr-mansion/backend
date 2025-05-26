@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.warrr.zipflex.api.favorite.dao.FavoriteRegionDao">
+
+	<select id="existsByCodeAndMemberUuid">
+	    SELECT COUNT(*) > 0
+	    FROM interested_legal_district
+	    WHERE legal_district_code = #{code} AND member_uuid = #{memberUuid};
+	</select>
+	
+	<insert id="insert">
+	    INSERT INTO interested_legal_district(legal_district_code, member_uuid)
+	    VALUES(#{code}, #{memberUuid});
+	</insert>
+
+</mapper>
