@@ -2,7 +2,9 @@ package com.warrr.zipflex.global.exception.handler;
 
 import static com.warrr.zipflex.global.response.BaseResponseStatus.INTERNAL_SERVER_ERROR;
 import static com.warrr.zipflex.global.response.BaseResponseStatus.INVALID_INPUT_VALUE;
+import static com.warrr.zipflex.global.response.BaseResponseStatus.NO_ACCESS_AUTHORITY;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,6 +26,15 @@ public class GlobalExceptionHandler {
         log.error("BaseException -> {} ({})", e.getStatus(), e.getStatus().getMessage(), e);
 
         return new BaseResponse<>(e.getStatus());
+    }
+    
+    /**
+     * 접근 권한 없음 예외 처리.
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    protected BaseResponse<Void> handleAccessDeniedException(AccessDeniedException e) {
+        log.error("AccessDeniedException -> 접근 권한 없음 (403 Forbidden)", e);
+        return new BaseResponse<>(NO_ACCESS_AUTHORITY);
     }
 
     /**

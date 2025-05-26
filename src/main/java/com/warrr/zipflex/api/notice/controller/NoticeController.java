@@ -1,51 +1,36 @@
 package com.warrr.zipflex.api.notice.controller;
 
-import com.warrr.zipflex.api.notice.dto.in.NoticeCreateRequestDto;
-import com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto;
 import com.warrr.zipflex.api.notice.service.NoticeService;
 import com.warrr.zipflex.global.response.BaseResponse;
+import com.warrr.zipflex.global.support.CursorPage;
+import com.warrr.zipflex.global.support.PageRequestDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Tag(name = "Notice")
 @RestController
-@RequestMapping("/v1/notice")
+@RequestMapping("/v1/notices")
 @RequiredArgsConstructor
 public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @PostMapping
-    public BaseResponse<Void> create(@RequestBody NoticeCreateRequestDto dto) {
-        noticeService.createNotice(dto);
-        return new BaseResponse<>();
-    }
-
     @GetMapping
-    public BaseResponse<List<NoticeInfoResponseDto>> list() {
-        return new BaseResponse<>(noticeService.getAllNotices());
+    public BaseResponse<CursorPage<NoticeInfoResponseDto>> getNoticesByPage(
+                    @ModelAttribute PageRequestDto requestDto) {
+
+        return new BaseResponse<>(noticeService.getNoticesByPage(requestDto));
     }
 
     @GetMapping("/{id}")
-    public BaseResponse<NoticeInfoResponseDto> detail(@PathVariable Long id) {
+    public BaseResponse<NoticeInfoResponseDto> getNoticeDetail(@PathVariable Long id) {
         return new BaseResponse<>(noticeService.getNotice(id));
     }
-
-    @PutMapping("/{id}")
-    public BaseResponse<Void> update(@PathVariable Long id,
-                    @RequestBody NoticeUpdateRequestDto dto) {
-        noticeService.updateNotice(id, dto);
-        return new BaseResponse<>();
-    }
-
-
-    @DeleteMapping("/{id}")
-    public BaseResponse<Void> delete(@PathVariable Long id) {
-        noticeService.deleteNotice(id);
-        return new BaseResponse<>();
-    }
+    
 }

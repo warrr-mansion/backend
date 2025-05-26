@@ -42,8 +42,13 @@ public enum BaseResponseStatus {
     /**
      * 700: House Domain 에러.
      */
-    INVALID_BUILDING_TYPE(HttpStatus.BAD_REQUEST, false, 701, "지원하지 않는 BuildingType입니다.");
+    INVALID_BUILDING_TYPE(HttpStatus.BAD_REQUEST, false, 701, "지원하지 않는 BuildingType입니다."),
 
+    /**
+     * 800: Notice 에러.
+     */
+    NO_EXIST_NOTICE(HttpStatus.NOT_FOUND, false, 804, "존재하지 않는 공지사항입니다.");
+    
     private final HttpStatus httpStatus;
     private final boolean isSuccess;
     private final int code;

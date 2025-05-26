@@ -6,37 +6,40 @@
 <mapper namespace="com.warrr.zipflex.api.notice.dao.NoticeDao">
 
     <!-- 공지사항 등록 -->
-    <insert id="insertNotice">
+    <insert id="insertNotice" parameterType="com.warrr.zipflex.api.notice.dto.in.NoticeCreateRequestDto">
         INSERT INTO notice (title, content, regist_date)
-        VALUES (#{title}, #{content}, #{registDate})
+        VALUES (#{title}, #{content}, NOW())
     </insert>
 
-    <!-- 전체 공지사항 조회 -->
-    <select id="findAll"
-            resultType="com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto">
-        SELECT id, title, content, regist_date
-        FROM notice
-        ORDER BY regist_date DESC
-    </select>
+    <!-- 페이지네이션 공지사항 조회 -->
+    <select id="findAllByPage"
+        parameterType="com.warrr.zipflex.global.support.PageRequestDto"
+        resultType="com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto">
+    
+	    SELECT id, title, content, regist_date
+	    FROM notice
+	    ORDER BY id
+	    LIMIT #{limitPlusOne}
+	    OFFSET #{offset}
+	</select>
 
     <!-- ID로 공지사항 조회 -->
-    <select id="findById" parameterType="long"
+    <select id="findById"
             resultType="com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto">
         SELECT id, title, content, regist_date
         FROM notice
         WHERE id = #{id}
     </select>
 
-    <update id="updateNotice">
+    <update id="updateNotice" parameterType="com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto">
         UPDATE notice
-        SET title       = #{title},
-            content     = #{content},
-            regist_date = #{registDate}
+        SET title = #{title},
+            content = #{content}
         WHERE id = #{id}
     </update>
 
     <!-- 공지사항 삭제 -->
-    <delete id="deleteNotice" parameterType="long">
+    <delete id="deleteNotice">
         DELETE
         FROM notice
         WHERE id = #{id}
