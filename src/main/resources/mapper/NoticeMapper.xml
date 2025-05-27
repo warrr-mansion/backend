@@ -18,7 +18,7 @@
     
 	    SELECT id, title, content, regist_date
 	    FROM notice
-	    ORDER BY id
+	    ORDER BY regist_date DESC
 	    LIMIT #{limitPlusOne}
 	    OFFSET #{offset}
 	</select>
