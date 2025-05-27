@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class CookieUtil {
 
     private final JwtProperties jwtProperties;
+    private static final String GUEST_TOKEN_PREFIX = "X-Unsigned-User-UUID";
     
     public String createHttpOnlyCookie(String value, boolean isAccessToken) {
         String name = isAccessToken ? jwtProperties.getAccessTokenPrefix()
@@ -24,4 +25,13 @@ public class CookieUtil {
                 .maxAge(Duration.ofSeconds(tokenExpireTime))
                 .build().toString();
     }
+    
+    public String createGuestCookie(String value) {
+        return ResponseCookie.from(GUEST_TOKEN_PREFIX, value)
+                        .httpOnly(true)
+                        .path("/")
+                        .maxAge(Duration.ofDays(30))
+                        .build().toString();
+    }
+    
 }

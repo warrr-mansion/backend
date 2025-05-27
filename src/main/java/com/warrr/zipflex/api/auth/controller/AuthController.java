@@ -42,7 +42,7 @@ public class AuthController {
         return new BaseResponse<>();
     }
 
-    @Operation(summary = "로그인")
+    @Operation(summary = "로그인", description = "Access Token, Refresh Token을 발급하고 쿠키로 전달합니다.")
     @PostMapping("/sign-in")
     public BaseResponse<SignInResponseVo> signIn(@Valid @RequestBody SignInRequestVo requestVo,
                     HttpServletResponse response) {
@@ -56,13 +56,22 @@ public class AuthController {
         return new BaseResponse<>(responseDto.toVo());
     }
 
-    @Operation(summary = "Access Token 재발급")
+    @Operation(summary = "Access Token 재발급", description = "Access Token을 재발급하고 쿠키로 전달합니다.")
     @PostMapping("/reissue")
     public BaseResponse<Void> reissue(@RequestBody ReIssueTokenRequestDto requestDto,
                     HttpServletResponse response) {
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookieUtil.createHttpOnlyCookie(
                         authService.reissueAccessToken(requestDto.getRefreshToken()), true));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "비회원 UUID 발급", description = "비회원 UUID를 발급하고 쿠키로 전달합니다.", tags = {"비회원"})
+    @GetMapping("/guest")
+    public BaseResponse<Void> issueUnsignedMemberUuid(HttpServletResponse response) {
+
+        response.addHeader(HttpHeaders.SET_COOKIE,
+                        cookieUtil.createGuestCookie(authService.issueUnsignedUuid()));
         return new BaseResponse<>();
     }
 
