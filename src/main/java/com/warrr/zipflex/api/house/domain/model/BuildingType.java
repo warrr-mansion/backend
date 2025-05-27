@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum HouseType {
+public enum BuildingType {
 
     APARTMENT("apartment"),
     VILLA("villa"),
     OFFICETEL("officetel"),
     UNKNOWN("unknown");
     
-    private final String houseType;
+    private final String buildingType;
 }

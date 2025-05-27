@@ -1,23 +1,22 @@
 package com.warrr.zipflex.api.house.service;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.warrr.zipflex.api.house.dao.HouseInfoDao;
+import com.warrr.zipflex.api.house.dto.out.HouseInfoPageRequestDto;
 import com.warrr.zipflex.api.house.dto.out.HouseInfoResponseDto;
 import com.warrr.zipflex.global.support.CursorPage;
-import com.warrr.zipflex.global.support.PageRequestDto;
 import lombok.RequiredArgsConstructor;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class HouseInfoServiceImpl implements HouseInfoService {
 
 
     private final HouseInfoDao houseInfoDao;
 
-    // 총 항목 수 조회 API 추가
     @Override
     public int getHouseCountByFilter(String buildingType, String contractType, String sgg,
                     String emd) {
@@ -25,21 +24,9 @@ public class HouseInfoServiceImpl implements HouseInfoService {
     }
 
     @Override
-    public CursorPage<HouseInfoResponseDto> findHouseInfoWithPagination(String buildingType,
-                    String sgg, String emd, PageRequestDto requestDto) {
+    public CursorPage<HouseInfoResponseDto> findHouseInfoWithPagination(HouseInfoPageRequestDto requestDto) {
 
-
-
-        // 파라미터 맵 구성
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("buildingType", buildingType);
-        paramMap.put("sgg", sgg);
-        paramMap.put("emd", emd);
-        paramMap.put("pageRequest", requestDto);
-        paramMap.put("limitPlusOne", requestDto.getPageSize() + 1);
-
-        // 데이터 조회
-        List<HouseInfoResponseDto> dtoList = houseInfoDao.findHouseInfoWithPagination(paramMap);
+        List<HouseInfoResponseDto> dtoList = houseInfoDao.findHouseInfoWithPagination(requestDto);
 
         int pageSize = requestDto.getPageSize();
         int pageNo = requestDto.getPageNo();
@@ -51,6 +38,8 @@ public class HouseInfoServiceImpl implements HouseInfoService {
 
         Long nextCursor = hasNext && !dtoList.isEmpty() ? dtoList.get(dtoList.size() - 1).getId() : null;
 
+        // TODO: 조회 수 증가 및 최근 본 매물 리스트에 추가
+        
         return CursorPage.<HouseInfoResponseDto>builder().content(dtoList).pageSize(pageSize)
                         .pageNo(pageNo).hasNext(hasNext).nextCursor(nextCursor).build();
     }

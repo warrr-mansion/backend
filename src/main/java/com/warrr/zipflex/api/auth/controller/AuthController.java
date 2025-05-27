@@ -66,7 +66,7 @@ public class AuthController {
         return new BaseResponse<>();
     }
 
-    @Operation(summary = "비회원 UUID 발급", description = "비회원 UUID를 발급하고 쿠키로 전달합니다.", tags = {"비회원"})
+    @Operation(summary = "비회원 UUID 발급", description = "비회원 UUID를 발급하고 쿠키로 전달합니다.")
     @GetMapping("/guest")
     public BaseResponse<Void> issueUnsignedMemberUuid(HttpServletResponse response) {
 
