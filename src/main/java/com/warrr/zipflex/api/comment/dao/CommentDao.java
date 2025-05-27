@@ -20,4 +20,6 @@ public interface CommentDao {
 
     List<CommentResponseDto> findAllByHouseInfoIdAndPage(CommentPageRequestDto requestDto);
 
+    List<String> findTopContentsByHouseInfo(Long houseInfoId, int limit);
+    
 }
