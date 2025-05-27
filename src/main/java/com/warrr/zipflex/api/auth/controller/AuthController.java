@@ -1,5 +1,6 @@
 package com.warrr.zipflex.api.auth.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +15,8 @@ import com.warrr.zipflex.api.auth.service.AuthService;
 import com.warrr.zipflex.api.auth.vo.in.SignInRequestVo;
 import com.warrr.zipflex.api.auth.vo.in.SignUpRequestVo;
 import com.warrr.zipflex.api.auth.vo.out.SignInResponseVo;
-import com.warrr.zipflex.global.properties.JwtProperties;
 import com.warrr.zipflex.global.response.BaseResponse;
+import com.warrr.zipflex.global.support.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final AuthService authService;
-    private final JwtProperties jwtProperties;
+    private final CookieUtil cookieUtil;
 
     @Operation(summary = "회원가입", description = """
                     닉네임 (1~12자, 따옴표 불가)\n\n
@@ -41,25 +42,36 @@ public class AuthController {
         return new BaseResponse<>();
     }
 
-    @Operation(summary = "로그인")
+    @Operation(summary = "로그인", description = "Access Token, Refresh Token을 발급하고 쿠키로 전달합니다.")
     @PostMapping("/sign-in")
     public BaseResponse<SignInResponseVo> signIn(@Valid @RequestBody SignInRequestVo requestVo,
                     HttpServletResponse response) {
 
         JwtTokenResponseDto responseDto = authService.signIn(SignInRequestDto.toDto(requestVo));
 
-        response.setHeader(jwtProperties.getAccessTokenPrefix(), responseDto.getAccessToken());
-        response.setHeader(jwtProperties.getRefreshTokenPrefix(), responseDto.getRefreshToken());
+        response.addHeader(HttpHeaders.SET_COOKIE,
+                        cookieUtil.createHttpOnlyCookie(responseDto.getAccessToken(), true));
+        response.addHeader(HttpHeaders.SET_COOKIE,
+                        cookieUtil.createHttpOnlyCookie(responseDto.getRefreshToken(), false));
         return new BaseResponse<>(responseDto.toVo());
     }
 
-    @Operation(summary = "Access Token 재발급")
+    @Operation(summary = "Access Token 재발급", description = "Access Token을 재발급하고 쿠키로 전달합니다.")
     @PostMapping("/reissue")
     public BaseResponse<Void> reissue(@RequestBody ReIssueTokenRequestDto requestDto,
                     HttpServletResponse response) {
 
-        response.setHeader(jwtProperties.getAccessTokenPrefix(),
-                        authService.reissueAccessToken(requestDto.getRefreshToken()));
+        response.addHeader(HttpHeaders.SET_COOKIE, cookieUtil.createHttpOnlyCookie(
+                        authService.reissueAccessToken(requestDto.getRefreshToken()), true));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "비회원 UUID 발급", description = "비회원 UUID를 발급하고 쿠키로 전달합니다.", tags = {"비회원"})
+    @GetMapping("/guest")
+    public BaseResponse<Void> issueUnsignedMemberUuid(HttpServletResponse response) {
+
+        response.addHeader(HttpHeaders.SET_COOKIE,
+                        cookieUtil.createGuestCookie(authService.issueUnsignedUuid()));
         return new BaseResponse<>();
     }
 
@@ -68,5 +80,5 @@ public class AuthController {
     public BaseResponse<EmailCheckResponseDto> checkEmail(@PathVariable String email) {
         return new BaseResponse<>(authService.checkEmail(email));
     }
-    
+
 }

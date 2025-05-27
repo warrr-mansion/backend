@@ -13,6 +13,8 @@ public interface AuthService {
     
     String reissueAccessToken(String refreshToken);
     
+    String issueUnsignedUuid();
+    
     EmailCheckResponseDto checkEmail(String email);
     
 }

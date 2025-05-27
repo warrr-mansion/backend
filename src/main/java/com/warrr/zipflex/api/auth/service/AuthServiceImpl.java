@@ -5,6 +5,7 @@ import static com.warrr.zipflex.api.auth.domain.model.TokenType.REFRESH_TOKEN;
 import static com.warrr.zipflex.global.response.BaseResponseStatus.FAILED_TO_LOGIN;
 import static com.warrr.zipflex.global.response.BaseResponseStatus.WRONG_JWT_TOKEN;
 import java.util.Optional;
+import java.util.UUID;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -69,6 +70,11 @@ public class AuthServiceImpl implements AuthService {
                         ACCESS_TOKEN);
     }
 
+    @Override
+    public String issueUnsignedUuid() {
+        return UUID.randomUUID().toString();
+    }
+    
     @Transactional(readOnly = true)
     @Override
     public EmailCheckResponseDto checkEmail(String email) {

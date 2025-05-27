@@ -38,5 +38,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SET is_deleted = true
         WHERE id = #{commentId};
     </delete>
+    
+    <select id="findTopContentsByHouseInfo">
+    	SELECT content
+	    FROM comment
+	    WHERE is_deleted = false AND house_info_id = #{houseInfoId}
+	    ORDER BY regist_date DESC
+	    LIMIT #{limit}
+    </select>
 
 </mapper>

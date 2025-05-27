@@ -7,31 +7,29 @@
 
 	<select id="findAllSido"
 		resultType="com.warrr.zipflex.api.region.dto.out.SidoResponseDto">
-		SELECT dong_code AS code, sido_name AS name
-		FROM dongcodes
+		SELECT code, sido_name AS name
+		FROM legal_district
 		WHERE gugun_name IS NULL AND dong_name IS NULL
 		ORDER BY sido_name
 	</select>
 
 	<select id="findAllGugun" parameterType="map"
 		resultType="com.warrr.zipflex.api.region.dto.out.GugunResponseDto">
-		SELECT dong_code AS code, gugun_name AS name
-		FROM dongcodes
-		WHERE LEFT(dong_code, 2) = #{sidoCodePrefix}
-		AND dong_name IS NULL
-		AND
-		gugun_name is NOT NULL
+		SELECT code, gugun_name AS name
+		FROM legal_district
+		WHERE LEFT(code, 2) = #{sidoCodePrefix}
+			AND dong_name IS NULL
+			AND gugun_name IS NOT NULL
 		ORDER BY gugun_name
 	</select>
 
 	<select id="findAllDong" parameterType="map"
 		resultType="com.warrr.zipflex.api.region.dto.out.DongResponseDto">
-		SELECT dong_code AS code, dong_name AS name
-		FROM dongcodes
-		WHERE LEFT(dong_code, 5) = #{gugunCodePrefix}
-		AND dong_name IS NOT NULL
-		ORDER
-		BY dong_name
+		SELECT code, dong_name AS name
+		FROM legal_district
+		WHERE LEFT(code, 5) = #{gugunCodePrefix}
+			AND dong_name IS NOT NULL
+		ORDER BY dong_name
 	</select>
 
 
