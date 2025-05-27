@@ -1,4 +1,4 @@
-package com.warrr.zipflex.api.chatbot.domain.model;
+package com.warrr.zipflex.api.ai.domain.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

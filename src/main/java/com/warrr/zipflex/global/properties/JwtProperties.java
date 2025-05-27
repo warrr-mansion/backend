@@ -1,4 +1,4 @@
-package com.warrr.zipflex.global.jwt.properties;
+package com.warrr.zipflex.global.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

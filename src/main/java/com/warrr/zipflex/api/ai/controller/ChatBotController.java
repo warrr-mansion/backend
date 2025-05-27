@@ -1,12 +1,12 @@
-package com.warrr.zipflex.api.chatbot.controller;
+package com.warrr.zipflex.api.ai.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.warrr.zipflex.api.chatbot.dto.in.ChatMessageRequestDto;
-import com.warrr.zipflex.api.chatbot.dto.out.ChatMessageResponseDto;
-import com.warrr.zipflex.api.chatbot.service.ChatBotService;
+import com.warrr.zipflex.api.ai.dto.in.ChatMessageRequestDto;
+import com.warrr.zipflex.api.ai.dto.out.ChatMessageResponseDto;
+import com.warrr.zipflex.api.ai.service.ChatBotService;
 import com.warrr.zipflex.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

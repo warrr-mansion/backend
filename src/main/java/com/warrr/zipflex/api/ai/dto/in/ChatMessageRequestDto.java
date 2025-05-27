@@ -1,4 +1,4 @@
-package com.warrr.zipflex.api.chatbot.dto.in;
+package com.warrr.zipflex.api.ai.dto.in;
 
 import lombok.Getter;
 import lombok.ToString;

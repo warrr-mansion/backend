@@ -14,7 +14,7 @@ import com.warrr.zipflex.api.auth.service.AuthService;
 import com.warrr.zipflex.api.auth.vo.in.SignInRequestVo;
 import com.warrr.zipflex.api.auth.vo.in.SignUpRequestVo;
 import com.warrr.zipflex.api.auth.vo.out.SignInResponseVo;
-import com.warrr.zipflex.global.jwt.properties.JwtProperties;
+import com.warrr.zipflex.global.properties.JwtProperties;
 import com.warrr.zipflex.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

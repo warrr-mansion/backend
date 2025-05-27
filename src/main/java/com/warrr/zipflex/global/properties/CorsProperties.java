@@ -1,4 +1,4 @@
-package com.warrr.zipflex.global.jwt.properties;
+package com.warrr.zipflex.global.properties;
 
 import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;

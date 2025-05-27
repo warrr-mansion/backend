@@ -1,4 +1,4 @@
-package com.warrr.zipflex.api.chatbot.dto.out;
+package com.warrr.zipflex.api.ai.dto.out;
 
 import lombok.Builder;
 import lombok.Getter;

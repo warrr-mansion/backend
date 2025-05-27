@@ -1,10 +1,10 @@
-package com.warrr.zipflex.api.chatbot.domain.document;
+package com.warrr.zipflex.api.ai.domain.document;
 
 import static com.warrr.zipflex.global.response.BaseResponseStatus.INVALID_ROLE;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
-import com.warrr.zipflex.api.chatbot.domain.model.RoleType;
+import com.warrr.zipflex.api.ai.domain.model.RoleType;
 import com.warrr.zipflex.global.exception.BaseException;
 import lombok.Builder;
 import lombok.Getter;

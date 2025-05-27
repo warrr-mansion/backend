@@ -16,8 +16,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import com.warrr.zipflex.global.exception.handler.AuthenticationEntryPointHandler;
 import com.warrr.zipflex.global.jwt.JwtAuthenticationFilter;
-import com.warrr.zipflex.global.jwt.properties.CorsProperties;
-import com.warrr.zipflex.global.jwt.properties.JwtProperties;
+import com.warrr.zipflex.global.properties.CorsProperties;
+import com.warrr.zipflex.global.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 
 @Configuration

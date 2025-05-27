@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.warrr.zipflex.global.jwt.properties.JwtProperties;
+import com.warrr.zipflex.global.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
