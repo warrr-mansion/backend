@@ -3,26 +3,32 @@ package com.warrr.zipflex.global.support;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
-@SuperBuilder
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class PageRequestDto {
-    @Schema(defaultValue = "1", description = "볼 페이지 번호(1이 첫 페이지)")
-    @Builder.Default
-    private int page = 1;
+    
+    @Schema(defaultValue = "1", description = "조회할 페이지 번호 (1부터 시작)")
+    private int pageNo = 1;
 
-    @Schema(defaultValue = "10", description = "한 페이지마다 보여줄 컨텐츠의 개수")
-    @Builder.Default
-    private int size = 10;
+    @Schema(defaultValue = "10", description = "페이지당 항목 수")
+    private int pageSize = 10;
 
     @JsonIgnore
     public int getOffset() {
-        return (page - 1) * size;
+        return (pageNo - 1) * pageSize;
     }
+    
+    @JsonIgnore
+    public int getLimitPlusOne() {
+        return pageSize + 1;
+    }
+    
 }

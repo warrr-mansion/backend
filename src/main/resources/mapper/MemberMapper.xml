@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.warrr.zipflex.api.member.dao.MemberDao">
+
+	<!-- 회원가입 -->
+	<insert id="save" parameterType="com.warrr.zipflex.api.auth.dto.in.SignUpRequestDto">
+		INSERT INTO member (member_uuid, nickname, email, password,
+        	state, role, regist_date, modify_date)
+       	VALUES (#{memberUuid}, #{nickname}, #{email}, #{password}, #{state},
+        	#{role}, #{registDate}, #{modifyDate});
+	</insert>
+
+	<!-- member 단건 조회 -->
+	<select id="findByUuid" resultType="com.warrr.zipflex.api.member.domain.entity.Member">
+		SELECT member_uuid, nickname, email,
+			password, state, role
+		FROM member
+		WHERE member_uuid = #{memberUuid};
+	</select>
+	
+	<select id="findByEmail" resultType="com.warrr.zipflex.api.auth.dto.out.SignInResponseDto">
+		SELECT member_uuid, email, password, role
+		FROM member
+		WHERE email = #{email};
+	</select>
+	
+	<!-- email 중복 체크 -->
+	<select id="existsByEmail" resultType="com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto">
+	    SELECT COUNT(*) > 0 AS is_duplicated
+	    FROM member
+	    WHERE email = #{email};
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePassword">
+		UPDATE member
+		SET password = #{encodedPassword}
+		WHERE member_uuid = #{memberUuid};
+	</update>
+	
+	<!-- 닉네임 변경 -->
+	<update id="updateNickname">
+		UPDATE member
+		SET nickname = #{nickname}
+		WHERE member_uuid = #{memberUuid};
+	</update>
+	
+</mapper>

@@ -1,0 +1,91 @@
+package com.warrr.zipflex.api.auth.controller;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.warrr.zipflex.api.auth.dto.in.ReIssueTokenRequestDto;
+import com.warrr.zipflex.api.auth.dto.in.SignInRequestDto;
+import com.warrr.zipflex.api.auth.dto.out.EmailCheckResponseDto;
+import com.warrr.zipflex.api.auth.dto.out.JwtTokenResponseDto;
+import com.warrr.zipflex.api.auth.service.AuthService;
+import com.warrr.zipflex.api.auth.vo.in.SignInRequestVo;
+import com.warrr.zipflex.api.auth.vo.in.SignUpRequestVo;
+import com.warrr.zipflex.api.auth.vo.out.SignInResponseVo;
+import com.warrr.zipflex.global.properties.JwtProperties;
+import com.warrr.zipflex.global.response.BaseResponse;
+import com.warrr.zipflex.global.support.CookieUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@Tag(name = "Authentication")
+@RequestMapping("/v1/auth")
+@RequiredArgsConstructor
+@RestController
+public class AuthController {
+
+    private final AuthService authService;
+    private final CookieUtil cookieUtil;
+    private final JwtProperties jwtProperties;
+
+
+    @Operation(summary = "회원가입", description = """
+                    닉네임 (1~12자, 따옴표 불가)\n\n
+                    비밀번호 (8~20자, 공백 없이 영문+숫자+특수문자 포함)
+                    """)
+    @PostMapping("/sign-up")
+    public BaseResponse<Void> signUp(@Valid @RequestBody SignUpRequestVo requestVo) {
+        authService.signUp(requestVo);
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "로그인", description = "Access Token, Refresh Token을 발급하고 쿠키로 전달합니다.")
+    @PostMapping("/sign-in")
+    public BaseResponse<SignInResponseVo> signIn(@Valid @RequestBody SignInRequestVo requestVo,
+                    HttpServletResponse response) {
+
+        JwtTokenResponseDto responseDto = authService.signIn(SignInRequestDto.toDto(requestVo));
+
+        // response.addHeader(HttpHeaders.SET_COOKIE,
+        // cookieUtil.createHttpOnlyCookie(responseDto.getAccessToken(), true));
+        // response.addHeader(HttpHeaders.SET_COOKIE,
+        // cookieUtil.createHttpOnlyCookie(responseDto.getRefreshToken(), false));
+        response.setHeader(jwtProperties.getAccessTokenPrefix(), responseDto.getAccessToken());
+        response.setHeader(jwtProperties.getRefreshTokenPrefix(), responseDto.getRefreshToken());
+        return new BaseResponse<>(responseDto.toVo());
+    }
+
+    @Operation(summary = "Access Token 재발급", description = "Access Token을 재발급하고 쿠키로 전달합니다.")
+    @PostMapping("/reissue")
+    public BaseResponse<Void> reissue(@RequestBody ReIssueTokenRequestDto requestDto,
+                    HttpServletResponse response) {
+
+        response.setHeader(jwtProperties.getAccessTokenPrefix(),
+                        authService.reissueAccessToken(requestDto.getRefreshToken()));
+        // response.addHeader(HttpHeaders.SET_COOKIE, cookieUtil.createHttpOnlyCookie(
+        // authService.reissueAccessToken(requestDto.getRefreshToken()), true));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "비회원 UUID 발급", description = "비회원 UUID를 발급하고 쿠키로 전달합니다.")
+    @GetMapping("/guest")
+    public BaseResponse<Void> issueUnsignedMemberUuid(HttpServletResponse response) {
+
+        response.addHeader(HttpHeaders.SET_COOKIE,
+                        cookieUtil.createGuestCookie(authService.issueUnsignedUuid()));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "이메일 중복 검사")
+    @GetMapping("/check-email/{email}")
+    public BaseResponse<EmailCheckResponseDto> checkEmail(@PathVariable String email) {
+        return new BaseResponse<>(authService.checkEmail(email));
+    }
+
+}

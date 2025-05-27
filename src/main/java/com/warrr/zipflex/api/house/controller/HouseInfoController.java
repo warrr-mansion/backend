@@ -1,7 +1,7 @@
 package com.warrr.zipflex.api.house.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,13 +11,14 @@ import com.warrr.zipflex.api.house.service.HouseInfoService;
 import com.warrr.zipflex.global.response.BaseResponse;
 import com.warrr.zipflex.global.support.CursorPage;
 import com.warrr.zipflex.global.support.PageRequestDto;
-import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 
+@Tag(name = "HouseInfo")
 @RestController
-@RequestMapping("/v1/houseinfo")
+@RequestMapping("/v1/houses")
 @RequiredArgsConstructor
 public class HouseInfoController {
     private final HouseInfoService houseInfoService;
@@ -56,7 +57,7 @@ public class HouseInfoController {
                                     required = false) String sgg,
                     @Parameter(description = "읍면동 코드") @RequestParam(value = "emd",
                                     required = false) String emd,
-                    @ParameterObject PageRequestDto requestDto) {
+                    @ModelAttribute PageRequestDto requestDto) {
         return new BaseResponse<>((CursorPage<HouseInfoResponseDto>) houseInfoService
                         .findHouseInfoWithPagination(buildingType, sgg, emd, requestDto));
     }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.warrr.zipflex.api.notice.dao.NoticeDao">
+
+    <!-- 공지사항 등록 -->
+    <insert id="insertNotice" parameterType="com.warrr.zipflex.api.notice.dto.in.NoticeCreateRequestDto">
+        INSERT INTO notice (title, content, regist_date)
+        VALUES (#{title}, #{content}, NOW())
+    </insert>
+
+    <!-- 페이지네이션 공지사항 조회 -->
+    <select id="findAllByPage"
+        parameterType="com.warrr.zipflex.global.support.PageRequestDto"
+        resultType="com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto">
+    
+	    SELECT id, title, content, regist_date
+	    FROM notice
+	    ORDER BY id
+	    LIMIT #{limitPlusOne}
+	    OFFSET #{offset}
+	</select>
+
+    <!-- ID로 공지사항 조회 -->
+    <select id="findById"
+            resultType="com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto">
+        SELECT id, title, content, regist_date
+        FROM notice
+        WHERE id = #{noticeId}
+    </select>
+
+    <update id="updateNotice" parameterType="com.warrr.zipflex.api.notice.dto.in.NoticeUpdateRequestDto">
+        UPDATE notice
+        SET title = #{title},
+            content = #{content}
+        WHERE id = #{noticeId}
+    </update>
+
+    <!-- 공지사항 삭제 -->
+    <delete id="deleteNotice">
+        DELETE
+        FROM notice
+        WHERE id = #{noticeId}
+    </delete>
+
+    <!-- 조회수 증가 (현재 컬럼엔 view_count 없음. 필요 시 테이블에 추가) -->
+    <!-- <update id="increaseViewCount" parameterType="long"> UPDATE notice
+        SET view_count = view_count + 1 WHERE id = #{id} </update> -->
+
+</mapper>

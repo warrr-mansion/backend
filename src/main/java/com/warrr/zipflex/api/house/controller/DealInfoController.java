@@ -1,6 +1,7 @@
 package com.warrr.zipflex.api.house.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,13 +11,14 @@ import com.warrr.zipflex.api.house.service.DealInfoService;
 import com.warrr.zipflex.global.response.BaseResponse;
 import com.warrr.zipflex.global.support.CursorPage;
 import com.warrr.zipflex.global.support.PageRequestDto;
-import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 
+@Tag(name = "HouseDeal")
 @RestController
-@RequestMapping("/v1/housedeal")
+@RequestMapping("/v1/houses")
 @RequiredArgsConstructor
 public class DealInfoController {
     private final DealInfoService dealInfoService;
@@ -76,17 +78,15 @@ public class DealInfoController {
      * @return 오프셋 페이지네이션이 적용된 거래 정보 목록.
      */
     @Operation(summary = "실거래가 조건별 조회 (페이지네이션)", description = "조건에 맞는 실거래가 정보를 페이지 단위로 조회합니다")
-    @GetMapping("/type/{buildingType}")
+    @GetMapping("/type/{buildingType}/deals")
     public BaseResponse<CursorPage<DealInfoResponseDto>> getDealInfoByFilterWithPagination(
                     @Parameter(description = "건물 유형 (apartment, villa, officetel)",
                                     required = true) @PathVariable String buildingType,
                     @Parameter(description = "거래 유형 (전세, 매매, 월세)") @RequestParam(
-                                    value = "contractType", required = false) String contractType,
-                    @Parameter(description = "시군구 코드") @RequestParam(value = "sgg",
-                                    required = false) String sgg,
-                    @Parameter(description = "읍면동 코드") @RequestParam(value = "emd",
-                                    required = false) String emd,
-                    @ParameterObject PageRequestDto requestDto) {
+                                    required = false) String contractType,
+                    @Parameter(description = "시군구 코드") @RequestParam(required = false) String sgg,
+                    @Parameter(description = "읍면동 코드") @RequestParam(required = false) String emd,
+                    @ModelAttribute PageRequestDto requestDto) {
         return new BaseResponse<>((CursorPage<DealInfoResponseDto>) dealInfoService
                         .getDealInfoByFilterWithPagination(buildingType, contractType, sgg, emd,
                                         requestDto));
@@ -103,13 +103,11 @@ public class DealInfoController {
      */
     @Operation(summary = "실거래가 ID별 조회 (페이지네이션)",
                     description = "특정 house_info_id에 해당하는 실거래가 정보를 페이지 단위로 조회합니다")
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/type/{buildingType}/deals")
     public BaseResponse<CursorPage<DealInfoResponseDto>> getDealInfoByHouseInfoIdWithPagination(
-                    @Parameter(description = "house_info_id",
-                                    required = true) @PathVariable String id,
-                    @Parameter(description = "건물 유형 (apartment, villa, officetel)",
-                                    required = true) @RequestParam String buildingType,
-                    @ParameterObject PageRequestDto requestDto) {
+                    @Parameter(description = "house_info_id") @PathVariable String id,
+                    @Parameter(description = "건물 유형 (apartment, villa, officetel)") @PathVariable String buildingType,
+                    @ModelAttribute PageRequestDto requestDto) {
         return new BaseResponse<>(dealInfoService
                         .getDealInfoByHouseInfoIdWithPagination(buildingType, id, requestDto));
     }

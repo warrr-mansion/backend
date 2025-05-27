@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrr.zipflex.api.comment.dao.CommentDao">
+
+    <insert id="insertComment" parameterType="com.warrr.zipflex.api.comment.dto.in.CommentCreateRequestDto">
+        INSERT INTO comment (house_info_id, member_uuid, nickname, content, regist_date, modify_date)
+        VALUES (#{houseInfoId}, #{memberUuid}, #{nickname}, #{content}, NOW(), NOW());
+    </insert>
+    
+    <update id="updateComment" parameterType="com.warrr.zipflex.api.comment.dto.in.CommentUpdateRequestDto">
+        UPDATE comment
+        SET content = #{content}, modify_date = NOW()
+        WHERE id = #{commentId};
+    </update>
+
+	<select id="findById" parameterType="com.warrr.zipflex.api.comment.dto.out.CommentResponseDto">
+        SELECT id AS comment_id, house_info_id, member_uuid, nickname, content, regist_date, modify_date
+        FROM comment
+        WHERE id = #{id};
+    </select>
+    
+    <select id="findAllByHouseInfoIdAndPage"
+        parameterType="com.warrr.zipflex.api.comment.dto.in.CommentPageRequestDto"
+        resultType="com.warrr.zipflex.api.comment.dto.out.CommentResponseDto">
+    
+	    SELECT id AS comment_id, house_info_id, member_uuid, nickname, content, regist_date, modify_date
+	    FROM comment
+	    WHERE is_deleted = false AND house_info_id = #{houseInfoId}
+	    ORDER BY regist_date DESC
+	    LIMIT #{limitPlusOne}
+	    OFFSET #{offset};
+	</select>
+
+	<delete id="deleteComment">
+        UPDATE comment
+        SET is_deleted = true
+        WHERE id = #{commentId};
+    </delete>
+    
+    <select id="findTopContentsByHouseInfo">
+    	SELECT content
+	    FROM comment
+	    WHERE is_deleted = false AND house_info_id = #{houseInfoId}
+	    ORDER BY regist_date DESC
+	    LIMIT #{limit}
+    </select>
+
+</mapper>

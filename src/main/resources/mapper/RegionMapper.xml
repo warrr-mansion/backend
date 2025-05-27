@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.warrr.zipflex.api.region.dao.RegionDao">
+
+	<select id="findAllSido"
+		resultType="com.warrr.zipflex.api.region.dto.out.SidoResponseDto">
+		SELECT code, sido_name AS name
+		FROM legal_district
+		WHERE gugun_name IS NULL AND dong_name IS NULL
+		ORDER BY sido_name
+	</select>
+
+	<select id="findAllGugun" parameterType="map"
+		resultType="com.warrr.zipflex.api.region.dto.out.GugunResponseDto">
+		SELECT code, gugun_name AS name
+		FROM legal_district
+		WHERE LEFT(code, 2) = #{sidoCodePrefix}
+			AND dong_name IS NULL
+			AND gugun_name IS NOT NULL
+		ORDER BY gugun_name
+	</select>
+
+	<select id="findAllDong" parameterType="map"
+		resultType="com.warrr.zipflex.api.region.dto.out.DongResponseDto">
+		SELECT code, dong_name AS name
+		FROM legal_district
+		WHERE LEFT(code, 5) = #{gugunCodePrefix}
+			AND dong_name IS NOT NULL
+		ORDER BY dong_name
+	</select>
+
+
+</mapper>

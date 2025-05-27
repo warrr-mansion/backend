@@ -36,13 +36,13 @@ public class HouseInfoServiceImpl implements HouseInfoService {
         paramMap.put("sgg", sgg);
         paramMap.put("emd", emd);
         paramMap.put("pageRequest", requestDto);
-        paramMap.put("limitPlusOne", requestDto.getSize() + 1);
+        paramMap.put("limitPlusOne", requestDto.getPageSize() + 1);
 
         // 데이터 조회
         List<HouseInfoResponseDto> dtoList = houseInfoDao.findHouseInfoWithPagination(paramMap);
 
-        int pageSize = requestDto.getSize();
-        int pageNo = requestDto.getPage();
+        int pageSize = requestDto.getPageSize();
+        int pageNo = requestDto.getPageNo();
         boolean hasNext = dtoList.size() > pageSize;
 
         if (hasNext) {

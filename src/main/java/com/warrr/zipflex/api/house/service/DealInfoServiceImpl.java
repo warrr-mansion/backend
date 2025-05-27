@@ -84,12 +84,12 @@ public class DealInfoServiceImpl implements DealInfoService {
         paramMap.put("sgg", sgg);
         paramMap.put("emd", emd);
         paramMap.put("pageRequest", requestDto);
-        paramMap.put("limitPlusOne", requestDto.getSize() + 1);
+        paramMap.put("limitPlusOne", requestDto.getPageSize() + 1);
 
         List<DealInfoResponseDto> deals = dao.findDealsByFilterWithPagination(paramMap);
 
-        int pageSize = requestDto.getSize();
-        int pageNo = requestDto.getPage();
+        int pageSize = requestDto.getPageSize();
+        int pageNo = requestDto.getPageNo();
         boolean hasNext = deals.size() > pageSize;
 
         if (hasNext) {
@@ -112,12 +112,12 @@ public class DealInfoServiceImpl implements DealInfoService {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("houseInfoId", houseInfoId);
         paramMap.put("pageRequest", requestDto);
-        paramMap.put("limitPlusOne", requestDto.getSize() + 1);
+        paramMap.put("limitPlusOne", requestDto.getPageSize() + 1);
 
         List<DealInfoResponseDto> deals = dao.findDealsByIdWithPagination(paramMap);
 
-        int pageSize = requestDto.getSize();
-        int pageNo = requestDto.getPage();
+        int pageSize = requestDto.getPageSize();
+        int pageNo = requestDto.getPageNo();
         boolean hasNext = deals.size() > pageSize;
 
         if (hasNext) {
