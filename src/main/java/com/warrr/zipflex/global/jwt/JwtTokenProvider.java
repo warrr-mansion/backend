@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.warrr.zipflex.api.auth.domain.model.AuthUserDetail;
 import com.warrr.zipflex.api.auth.domain.model.TokenType;
 import com.warrr.zipflex.global.exception.BaseException;
-import com.warrr.zipflex.global.jwt.properties.JwtProperties;
+import com.warrr.zipflex.global.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

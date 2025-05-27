@@ -6,7 +6,7 @@
 <mapper namespace="com.warrr.zipflex.api.region.dao.RegionDao">
 
 	<select id="findAllSido"
-		resultType="com.warrr.zipflex.api.region.dto.SidoDto">
+		resultType="com.warrr.zipflex.api.region.dto.out.SidoResponseDto">
 		SELECT dong_code AS code, sido_name AS name
 		FROM dongcodes
 		WHERE gugun_name IS NULL AND dong_name IS NULL
@@ -14,7 +14,7 @@
 	</select>
 
 	<select id="findAllGugun" parameterType="map"
-		resultType="com.warrr.zipflex.api.region.dto.GugunDto">
+		resultType="com.warrr.zipflex.api.region.dto.out.GugunResponseDto">
 		SELECT dong_code AS code, gugun_name AS name
 		FROM dongcodes
 		WHERE LEFT(dong_code, 2) = #{sidoCodePrefix}
@@ -25,7 +25,7 @@
 	</select>
 
 	<select id="findAllDong" parameterType="map"
-		resultType="com.warrr.zipflex.api.region.dto.DongDto">
+		resultType="com.warrr.zipflex.api.region.dto.out.DongResponseDto">
 		SELECT dong_code AS code, dong_name AS name
 		FROM dongcodes
 		WHERE LEFT(dong_code, 5) = #{gugunCodePrefix}

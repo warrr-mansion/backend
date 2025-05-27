@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.warrr.zipflex.api.favorite.dao.FavoriteHouseDao">
+
+	<select id="existsByCodeAndMemberUuid">
+	    SELECT COUNT(*) > 0
+	    FROM house_wishlist
+	    WHERE house_info_id = #{code} AND member_uuid = #{memberUuid};
+	</select>
+	
+	<insert id="insert">
+	    INSERT INTO house_wishlist(house_info_id, member_uuid)
+	    VALUES(#{code}, #{memberUuid});
+	</insert>
+
+	<delete id="deleteByCodeAndMemberUuid">
+		DELETE FROM house_wishlist
+		WHERE house_info_id = #{code} AND member_uuid = #{memberUuid};
+	</delete>
+
+	<select id="findAllByMemberUuidAndPage"
+		parameterType="com.warrr.zipflex.api.favorite.dto.in.FavoritePageRequestDto"
+		resultType="com.warrr.zipflex.api.favorite.dto.out.FavoriteHouseResponseDto">
+		
+		SELECT w.id AS id, i.id AS house_info_id, sigungu_code, 
+			emd_code, emd_name, house_type, jibun, road_name, building_name, build_year,
+			latitude, longitude
+		FROM house_wishlist w
+		JOIN house_info i ON w.house_info_id = i.id
+		WHERE member_uuid = #{memberUuid}
+		ORDER BY id DESC
+		LIMIT #{requestDto.limitPlusOne} 
+		OFFSET #{requestDto.offset};
+		
+	</select>
+
+</mapper>

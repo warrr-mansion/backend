@@ -27,10 +27,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
 	    SELECT id AS comment_id, house_info_id, member_uuid, nickname, content, regist_date, modify_date
 	    FROM comment
-	    WHERE is_deleted = false
+	    WHERE is_deleted = false AND house_info_id = #{houseInfoId}
 	    ORDER BY regist_date DESC
 	    LIMIT #{limitPlusOne}
-	    OFFSET #{offset}
+	    OFFSET #{offset};
 	</select>
 
 	<delete id="deleteComment">

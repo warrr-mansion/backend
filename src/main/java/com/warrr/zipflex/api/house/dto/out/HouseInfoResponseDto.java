@@ -3,11 +3,14 @@ package com.warrr.zipflex.api.house.dto.out;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class HouseInfoResponseDto {
+    
     private long id;
     private int sigunguCode;
     private int emdCode;
@@ -16,4 +19,5 @@ public class HouseInfoResponseDto {
     private String buildingName;
     private double latitude;
     private double longitude;
+    
 }

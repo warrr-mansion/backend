@@ -1,9 +1,10 @@
 package com.warrr.zipflex.global.exception.handler;
 
+import static com.warrr.zipflex.global.response.BaseResponseStatus.DATABASE_CONSTRAINT_VIOLATION;
 import static com.warrr.zipflex.global.response.BaseResponseStatus.INTERNAL_SERVER_ERROR;
 import static com.warrr.zipflex.global.response.BaseResponseStatus.INVALID_INPUT_VALUE;
 import static com.warrr.zipflex.global.response.BaseResponseStatus.NO_ACCESS_AUTHORITY;
-
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,8 +34,18 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AccessDeniedException.class)
     protected BaseResponse<Void> handleAccessDeniedException(AccessDeniedException e) {
-        log.error("AccessDeniedException -> 접근 권한 없음 (403 Forbidden)", e);
+        log.error("AccessDeniedException -> 접근 권한 없음 (403 Forbidden) {}", e);
         return new BaseResponse<>(NO_ACCESS_AUTHORITY);
+    }
+    
+    /**
+     * SQL 제약 조건 위반 예외 처리.
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public BaseResponse<Void> handleSqlIntegrityViolation(DataIntegrityViolationException e) {
+        log.error("DataIntegrityViolationException -> SQL 제약 조건 위반: {}", e);
+
+        return new BaseResponse<>(DATABASE_CONSTRAINT_VIOLATION);
     }
 
     /**
