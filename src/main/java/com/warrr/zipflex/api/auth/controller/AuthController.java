@@ -15,6 +15,7 @@ import com.warrr.zipflex.api.auth.service.AuthService;
 import com.warrr.zipflex.api.auth.vo.in.SignInRequestVo;
 import com.warrr.zipflex.api.auth.vo.in.SignUpRequestVo;
 import com.warrr.zipflex.api.auth.vo.out.SignInResponseVo;
+import com.warrr.zipflex.global.properties.JwtProperties;
 import com.warrr.zipflex.global.response.BaseResponse;
 import com.warrr.zipflex.global.support.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,6 +32,8 @@ public class AuthController {
 
     private final AuthService authService;
     private final CookieUtil cookieUtil;
+    private final JwtProperties jwtProperties;
+
 
     @Operation(summary = "회원가입", description = """
                     닉네임 (1~12자, 따옴표 불가)\n\n
@@ -49,10 +52,12 @@ public class AuthController {
 
         JwtTokenResponseDto responseDto = authService.signIn(SignInRequestDto.toDto(requestVo));
 
-        response.addHeader(HttpHeaders.SET_COOKIE,
-                        cookieUtil.createHttpOnlyCookie(responseDto.getAccessToken(), true));
-        response.addHeader(HttpHeaders.SET_COOKIE,
-                        cookieUtil.createHttpOnlyCookie(responseDto.getRefreshToken(), false));
+        // response.addHeader(HttpHeaders.SET_COOKIE,
+        // cookieUtil.createHttpOnlyCookie(responseDto.getAccessToken(), true));
+        // response.addHeader(HttpHeaders.SET_COOKIE,
+        // cookieUtil.createHttpOnlyCookie(responseDto.getRefreshToken(), false));
+        response.setHeader(jwtProperties.getAccessTokenPrefix(), responseDto.getAccessToken());
+        response.setHeader(jwtProperties.getRefreshTokenPrefix(), responseDto.getRefreshToken());
         return new BaseResponse<>(responseDto.toVo());
     }
 
@@ -61,12 +66,14 @@ public class AuthController {
     public BaseResponse<Void> reissue(@RequestBody ReIssueTokenRequestDto requestDto,
                     HttpServletResponse response) {
 
-        response.addHeader(HttpHeaders.SET_COOKIE, cookieUtil.createHttpOnlyCookie(
-                        authService.reissueAccessToken(requestDto.getRefreshToken()), true));
+        response.setHeader(jwtProperties.getAccessTokenPrefix(),
+                        authService.reissueAccessToken(requestDto.getRefreshToken()));
+        // response.addHeader(HttpHeaders.SET_COOKIE, cookieUtil.createHttpOnlyCookie(
+        // authService.reissueAccessToken(requestDto.getRefreshToken()), true));
         return new BaseResponse<>();
     }
 
-    @Operation(summary = "비회원 UUID 발급", description = "비회원 UUID를 발급하고 쿠키로 전달합니다.", tags = {"비회원"})
+    @Operation(summary = "비회원 UUID 발급", description = "비회원 UUID를 발급하고 쿠키로 전달합니다.")
     @GetMapping("/guest")
     public BaseResponse<Void> issueUnsignedMemberUuid(HttpServletResponse response) {
 
