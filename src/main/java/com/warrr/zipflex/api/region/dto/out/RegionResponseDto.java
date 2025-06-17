@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GugunResponseDto {
+public class RegionResponseDto {
+
     private String code;
     private String name;
+    
 }

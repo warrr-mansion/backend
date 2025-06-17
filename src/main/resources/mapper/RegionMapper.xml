@@ -6,15 +6,15 @@
 <mapper namespace="com.warrr.zipflex.api.region.dao.RegionDao">
 
 	<select id="findAllSido"
-		resultType="com.warrr.zipflex.api.region.dto.out.SidoResponseDto">
+		resultType="com.warrr.zipflex.api.region.dto.out.RegionResponseDto">
 		SELECT code, sido_name AS name
 		FROM legal_district
 		WHERE gugun_name IS NULL AND dong_name IS NULL
 		ORDER BY sido_name
 	</select>
 
-	<select id="findAllGugun" parameterType="map"
-		resultType="com.warrr.zipflex.api.region.dto.out.GugunResponseDto">
+	<select id="findAllGugun"
+		resultType="com.warrr.zipflex.api.region.dto.out.RegionResponseDto">
 		SELECT code, gugun_name AS name
 		FROM legal_district
 		WHERE LEFT(code, 2) = #{sidoCodePrefix}
@@ -23,14 +23,13 @@
 		ORDER BY gugun_name
 	</select>
 
-	<select id="findAllDong" parameterType="map"
-		resultType="com.warrr.zipflex.api.region.dto.out.DongResponseDto">
+	<select id="findAllDong"
+		resultType="com.warrr.zipflex.api.region.dto.out.RegionResponseDto">
 		SELECT code, dong_name AS name
 		FROM legal_district
 		WHERE LEFT(code, 5) = #{gugunCodePrefix}
 			AND dong_name IS NOT NULL
 		ORDER BY dong_name
 	</select>
-
 
 </mapper>

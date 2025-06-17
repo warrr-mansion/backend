@@ -1,15 +1,14 @@
 package com.warrr.zipflex.api.region.service;
 
 import java.util.List;
-import com.warrr.zipflex.api.region.dto.out.DongResponseDto;
-import com.warrr.zipflex.api.region.dto.out.GugunResponseDto;
-import com.warrr.zipflex.api.region.dto.out.SidoResponseDto;
+import com.warrr.zipflex.api.region.dto.out.RegionResponseDto;
 
 public interface RegionService {
-    List<SidoResponseDto> getAllSido();
+    
+    List<RegionResponseDto> getAllSido();
 
-    List<GugunResponseDto> getAllGugun(String sidoCode);
+    List<RegionResponseDto> getAllGugun(String sidoCode);
 
-    List<DongResponseDto> getAllDong(String gugunCode);
+    List<RegionResponseDto> getAllDong(String gugunCode);
 
 }
