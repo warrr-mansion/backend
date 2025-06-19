@@ -1,25 +1,15 @@
 package com.warrr.zipflex.global.support;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 public class PageRequestDto {
-    
-    @Schema(defaultValue = "1", description = "조회할 페이지 번호 (1부터 시작)")
-    private int pageNo = 1;
 
-    @Schema(defaultValue = "10", description = "페이지당 항목 수")
-    private int pageSize = 10;
+    private int pageNo;
+    private int pageSize;
 
     @JsonIgnore
     public int getOffset() {
@@ -29,6 +19,13 @@ public class PageRequestDto {
     @JsonIgnore
     public int getLimitPlusOne() {
         return pageSize + 1;
+    }
+    
+    public static PageRequestDto toDto(int pageNo, int pageSize) {
+        return PageRequestDto.builder()
+                        .pageNo(pageNo)
+                        .pageSize(pageSize)
+                        .build();
     }
     
 }

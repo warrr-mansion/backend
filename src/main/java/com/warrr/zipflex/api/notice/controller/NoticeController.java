@@ -1,9 +1,9 @@
 package com.warrr.zipflex.api.notice.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.warrr.zipflex.api.notice.dto.out.NoticeInfoResponseDto;
 import com.warrr.zipflex.api.notice.service.NoticeService;
@@ -24,15 +24,17 @@ public class NoticeController {
 
     @Operation(summary = "공지사항 목록 조회 (페이지네이션)")
     @GetMapping
-    public BaseResponse<CursorPage<NoticeInfoResponseDto>> getNoticesByPage(
-                    @ModelAttribute PageRequestDto requestDto) {
+    public BaseResponse<CursorPage<NoticeInfoResponseDto>> list(
+                    @RequestParam(defaultValue = "1") int pageNo,
+                    @RequestParam(defaultValue = "10") int pageSize) {
 
-        return new BaseResponse<>(noticeService.getNoticesByPage(requestDto));
+        return new BaseResponse<>(
+                        noticeService.getNoticesByPage(PageRequestDto.toDto(pageNo, pageSize)));
     }
 
     @Operation(summary = "공지사항 상세 조회")
     @GetMapping("/{id}")
-    public BaseResponse<NoticeInfoResponseDto> getNoticeDetail(@PathVariable Long id) {
+    public BaseResponse<NoticeInfoResponseDto> detail(@PathVariable Long id) {
         return new BaseResponse<>(noticeService.getNotice(id));
     }
     
